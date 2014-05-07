@@ -23,12 +23,29 @@ cd $dir
 echo "done"
 
 # move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
+echo "Moving any existing dotfiles from ~ to $olddir"
 for file in $files; do
-    echo "Moving any existing dotfiles from ~ to $olddir"
-    mv ~/.$file ~/dotfiles_old/
-    echo "Creating symlink to $file in home directory."
-    ln -s $dir/$file ~/.$file
+    if [ -f ~/.$file ]; then
+        mv ~/.$file ~/dotfiles_old/
+    fi
+    if [ -f $dir/$file ]; then
+        echo "Creating symlink to $file in home directory."
+        ln -s $dir/$file ~/.$file
+    fi
 done
+
+#Things TODO
+#Check if vim is installed, if not print info
+#if vim installed, git install all the vim plugins
+install_vimplugins () {
+    if [[ ! -d ~/.vim/backup ]]; then
+        mkdir -p ~/.vim/backup
+    fi
+    if [[ ! -d ~/.vim/bundle ]]; then
+        git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle
+        vim +PluginInstall +qall
+    fi
+}
 
 install_zsh () {
 # Test to see if zshell is installed.  If it is:
@@ -57,3 +74,4 @@ fi
 }
 
 #install_zsh
+install_vimplugins

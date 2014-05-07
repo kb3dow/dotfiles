@@ -101,7 +101,7 @@ endif
 filetype off " Turn filetype on later. vundle needs it off
 " Bundl Settings {
     if g:My_Vundle_Enabled
-        set rtp+=~/.vim/bundle/vundle/
+        set rtp+=~/.vim/bundle/vundle
         call vundle#rc()
 
         Bundle 'gmarik/vundle'
