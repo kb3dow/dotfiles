@@ -6,11 +6,14 @@
 let g:My_Airline_Enabled        = 0 "airline is a lightweight alternative for powerline, uses powerline-fonts
 let g:My_Fugitive_Enabled       = 1
 let g:My_Gundo_Enabled          = 0
+let g:My_Matchit_Enabled        = 1
 let g:My_MBE_Enabled            = 0
 let g:My_NerdTree_Enabled       = 0
+let g:My_Numbers_Enabled        = 0
 let g:My_Powerline_Enabled      = 1
 let g:My_PowerlineFont_Enabled  = 1
 let g:My_PyMode_Enabled         = 0 " Note: use either syntastic or pymode
+let g:My_Spellcheck_Enabled     = 1
 let g:My_Syntastic_Enabled      = 1
 let g:My_Tabularize_Enabled     = 0
 let g:My_Vundle_Enabled         = 1 " Manage all the plugin bundles
@@ -74,21 +77,6 @@ endif
     set viminfo^=%
 " }
 
-filetype off " Turn filetype on later. vundle needs it off
-" Bundl Settings {
-    if g:My_Vundle_Enabled
-        set rtp+=~/.vim/bundle/vundle/
-        call vundle#rc()
-
-        Bundle 'gmarik/vundle'
-        Bundle 'scrooloose/nerdcommenter'
-        Bundle 'davidhalter/jedi-vim'
-        Bundle 'ervandew/supertab'
-        Bundle 'altercation/vim-colors-solarized'
-        "Bundle 'Lokaltog/vim-distinguished'
-    endif
-" }
-
 " My Leader Settings {
     let mapleader=","           "remap leader key to , instead of \
     "disable highlight when <leader><cr> is pressed
@@ -110,12 +98,84 @@ filetype off " Turn filetype on later. vundle needs it off
     imap <silent> <Leader>sn <Esc>:set nocursorcolumn nocursorline  <CR>a
 " }
 
+filetype off " Turn filetype on later. vundle needs it off
+" Bundl Settings {
+    if g:My_Vundle_Enabled
+        set rtp+=~/.vim/bundle/vundle/
+        call vundle#rc()
+
+        Bundle 'gmarik/vundle'
+        Bundle 'scrooloose/nerdcommenter'
+        Bundle 'davidhalter/jedi-vim'
+        Bundle 'ervandew/supertab'
+        Bundle 'altercation/vim-colors-solarized'
+        "Bundle 'Lokaltog/vim-distinguished'
+    endif
+" }
+
+"Vim-airline Settings {
+    if g:My_Airline_Enabled
+        Bundle 'bling/vim-airline'
+        "let g:airline_section_b = '%{strftime("%c")}'
+        let g:airline_section_y = 'B# %{bufnr("%")}'
+        let g:airline#extensions#tabline#enabled = 0
+        let g:airline#extensions#tabline#left_sep = ' '
+        let g:airline#extensions#tabline#left_alt_sep = '|'
+        let g:airline_powerline_fonts = 1
+    endif
+" }
+
+" Fugitive Settings {
+    if g:My_Fugitive_Enabled
+        Bundle 'tpope/vim-fugitive'
+        set statusline+=%{fugitive#statusline()}
+        map <leader>gs :Gstatus <CR>
+        map <leader>gd :Gdiff <CR>
+        map <leader>gc :Gcommit <CR>
+        map <leader>gb :Gblame <CR>
+        map <leader>gl :Glog <CR>
+        map <leader>gp :Git push <CR>
+    endif
+" }
+
+" Gundo Settings {
+    if g:My_Gundo_Enabled
+        Bundle 'sjl/gundo.vim'
+        nnoremap <F5> :GundoToggle<CR>
+    endif
+" }
+
+" Matchit Settings {
+    if g:My_Matchit_Enabled
+        Bundle 'tmhedberg/matchit'
+    endif
+" }
+
 " Mini buffer explorer Settings {
     if g:My_MBE_Enabled
         Bundle 'fholgado/minibufexpl.vim'
         map <Leader>e :MBEOpen<cr>
         map <Leader>c :MBEClose<cr>
         map <Leader>t :MBEToggle<cr>
+    endif
+" }
+
+" NerdTree Settings {
+    if g:My_NerdTree_Enabled
+        Bundle 'scrooloose/nerdtree'
+        map <F2> :NERDTreeToggle<CR>
+    endif
+" }
+"
+" Numbers Settings {
+    if g:My_Numbers_Enabled
+        Bundle 'myusuf3/numbers.vim'
+        set number
+        nnoremap <F3> :NumbersToggle<CR>
+        nnoremap <F4> :NumbersOnOff<CR>
+        map  <silent> <Leader>nt  :NumbersToggle<CR>
+        map  <silent> <Leader>no  :NumbersOnOff<CR>
+        let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'tagbar', 'gundo', 'minibufexpl', 'nerdtree']$
     endif
 " }
 
@@ -138,56 +198,6 @@ filetype off " Turn filetype on later. vundle needs it off
             au InsertEnter * set timeoutlen=0
             au InsertLeave * set timeoutlen=1000
         augroup END
-    endif
-" }
-
-"Vim-airline Settings {
-    if g:My_Airline_Enabled
-        Bundle 'bling/vim-airline'
-        "let g:airline_section_b = '%{strftime("%c")}'
-        let g:airline_section_y = 'B# %{bufnr("%")}'
-        let g:airline#extensions#tabline#enabled = 0
-        let g:airline#extensions#tabline#left_sep = ' '
-        let g:airline#extensions#tabline#left_alt_sep = '|'
-        let g:airline_powerline_fonts = 1
-    endif
-" }
-
-" NerdTree Settings {
-    if g:My_NerdTree_Enabled
-        Bundle 'scrooloose/nerdtree'
-        map <F2> :NERDTreeToggle<CR>
-    endif
-" }
-
-" Syntastic Settings {
-    if g:My_Syntastic_Enabled
-        Bundle 'scrooloose/syntastic'
-        let g:syntastic_python_checkers=['pep8','pylint']
-        let g:syntastic_c_checkers=['make','splint']
-        set statusline+=%#warningmsg#
-        set statusline+=%{SyntasticStatuslineFlag()}
-        set statusline+=%*
-        let g:syntastic_auto_loc_list=1
-        let g:syntastic_loc_list_height=5
-        "highlight link SyntasticError SpellBad
-        "highlight link SyntasticWarning SpellCap
-    endif
-" }
-
-" Tabularize {
-    if g:My_Tabularize_Enabled
-        Bundle 'godlygeek/tabular'
-        nmap <Leader>a= :Tabularize /=<CR>
-        vmap <Leader>a= :Tabularize /=<CR>
-        nmap <Leader>a: :Tabularize /:<CR>
-        vmap <Leader>a: :Tabularize /:<CR>
-        nmap <Leader>a:: :Tabularize /:\\zs<CR>
-        vmap <Leader>a:: :Tabularize /:\\zs<CR>
-        nmap <Leader>a, :Tabularize /,<CR>
-        vmap <Leader>a, :Tabularize /,<CR>
-        nmap <Leader>a| :Tabularize /|<CR>
-        vmap <Leader>a| :Tabularize /|<CR>
     endif
 " }
 
@@ -244,22 +254,48 @@ if g:My_PyMode_Enabled
 endif
 " }
 
+" Spelling Settings {
+    if g:My_Spellcheck_Enabled
+        setlocal spell spelllang=en_us
+        " default - no spell check
+        set nospell
+        nnoremap <silent> <leader>sp : set spell!<CR>
+    endif
+" }
+
+" Syntastic Settings {
+    if g:My_Syntastic_Enabled
+        Bundle 'scrooloose/syntastic'
+        let g:syntastic_python_checkers=['pep8','pylint']
+        let g:syntastic_c_checkers=['make','splint']
+        set statusline+=%#warningmsg#
+        set statusline+=%{SyntasticStatuslineFlag()}
+        set statusline+=%*
+        let g:syntastic_auto_loc_list=1
+        let g:syntastic_loc_list_height=5
+        "highlight link SyntasticError SpellBad
+        "highlight link SyntasticWarning SpellCap
+    endif
+" }
+
+" Tabularize {
+    if g:My_Tabularize_Enabled
+        Bundle 'godlygeek/tabular'
+        nmap <Leader>a= :Tabularize /=<CR>
+        vmap <Leader>a= :Tabularize /=<CR>
+        nmap <Leader>a: :Tabularize /:<CR>
+        vmap <Leader>a: :Tabularize /:<CR>
+        nmap <Leader>a:: :Tabularize /:\\zs<CR>
+        vmap <Leader>a:: :Tabularize /:\\zs<CR>
+        nmap <Leader>a, :Tabularize /,<CR>
+        vmap <Leader>a, :Tabularize /,<CR>
+        nmap <Leader>a| :Tabularize /|<CR>
+        vmap <Leader>a| :Tabularize /|<CR>
+    endif
+" }
+
 " And set some nice chars to do it with
 set listchars=tab:»\ ,eol:¬
-
-" Gundo Settings {
-    if g:My_Gundo_Enabled
-        Bundle 'sjl/gundo.vim'
-        nnoremap <F5> :GundoToggle<CR>
-    endif
-" }
-
-" Fugitive Settings {
-    if g:My_Fugitive_Enabled
-        Bundle 'tpope/vim-fugitive'
-        set statusline+=%{fugitive#statusline()}
-    endif
-" }
 
 " Append modeline after last line in buffer.
 " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
