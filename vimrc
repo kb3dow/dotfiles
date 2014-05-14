@@ -4,6 +4,7 @@
 " ! - exclamation point at the end of a setting tells vim to toggle the value
 
 let g:My_Airline_Enabled        = 0 "airline is a lightweight alternative for powerline, uses powerline-fonts
+let g:My_CtrlP_Enabled          = 1
 let g:My_Fugitive_Enabled       = 1
 let g:My_Gundo_Enabled          = 0
 let g:My_Matchit_Enabled        = 1
@@ -126,6 +127,13 @@ filetype off " Turn filetype on later. vundle needs it off
 " }
 
 " Fugitive Settings {
+    if g:My_CtrlP_Enabled
+        Bundle 'kien/ctrlp.vim'
+        set runtimepath^=~/.vim/bundle/ctrlp.vim
+    endif
+" }
+
+" Fugitive Settings {
     if g:My_Fugitive_Enabled
         Bundle 'tpope/vim-fugitive'
         set statusline+=%{fugitive#statusline()}
@@ -202,56 +210,56 @@ filetype off " Turn filetype on later. vundle needs it off
 " }
 
 " Python-mode Settings {
-if g:My_PyMode_Enabled
-    Bundle 'klen/python-mode'
-    " Keys:
-    " K             Show python docs
-    " <Ctrl-Space>  Rope autocomplete
-    " <Ctrl-c>g     Rope goto definition
-    " <Ctrl-c>d     Rope show documentation
-    " <Ctrl-c>f     Rope find occurrences
-    " <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
-    " [[            Jump on previous class or function (normal, visual, operator modes)
-    " ]]            Jump on next class or function (normal, visual, operator modes)
-    " [M            Jump on previous class or method (normal, visual, operator modes)
-    " ]M            Jump on next class or method (normal, visual, operator modes)
-    let g:pymode = 1 " turn it off/on
-    let g:pymode_rope = 0
+    if g:My_PyMode_Enabled
+        Bundle 'klen/python-mode'
+        " Keys:
+        " K             Show python docs
+        " <Ctrl-Space>  Rope autocomplete
+        " <Ctrl-c>g     Rope goto definition
+        " <Ctrl-c>d     Rope show documentation
+        " <Ctrl-c>f     Rope find occurrences
+        " <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
+        " [[            Jump on previous class or function (normal, visual, operator modes)
+        " ]]            Jump on next class or function (normal, visual, operator modes)
+        " [M            Jump on previous class or method (normal, visual, operator modes)
+        " ]M            Jump on next class or method (normal, visual, operator modes)
+        let g:pymode = 1 " turn it off/on
+        let g:pymode_rope = 0
 
-    " Documentation
-    let g:pymode_doc = 1
-    let g:pymode_doc_key = 'K'
+        " Documentation
+        let g:pymode_doc = 1
+        let g:pymode_doc_key = 'K'
 
-    "Linting
-    let g:pymode_lint = 1
-    let g:pymode_lint_checker = "pep8"
-    "let g:pymode_lint_checker = "pyflakes,pep8"
-    let g:pymode_lint_write = 1 " Auto check on save
+        "Linting
+        let g:pymode_lint = 1
+        let g:pymode_lint_checker = "pep8"
+        "let g:pymode_lint_checker = "pyflakes,pep8"
+        let g:pymode_lint_write = 1 " Auto check on save
 
-    " Support virtualenv
-    let g:pymode_virtualenv = 1
+        " Support virtualenv
+        let g:pymode_virtualenv = 1
 
-    " Enable breakpoints plugin
-    let g:pymode_breakpoint = 0
-    let g:pymode_breakpoint_key = '<leader>b'
+        " Enable breakpoints plugin
+        let g:pymode_breakpoint = 0
+        let g:pymode_breakpoint_key = '<leader>b'
 
-    " syntax highlighting
-    let g:pymode_syntax = 1
-    let g:pymode_syntax_all = 1
-    let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-    let g:pymode_syntax_space_errors = g:pymode_syntax_all
-    "
-    " Don't autofold code
-    let g:pymode_folding = 0
+        " syntax highlighting
+        let g:pymode_syntax = 1
+        let g:pymode_syntax_all = 1
+        let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+        let g:pymode_syntax_space_errors = g:pymode_syntax_all
+        "
+        " Don't autofold code
+        let g:pymode_folding = 0
 
-    " Toggle pymode Lint
-    map  <Leader>pt      :PymodeLintToggle <CR>
-    "
-    " this line is to prevent pymode from turning on line numbers at start
-    autocmd FileType python setlocal nonumber
+        " Toggle pymode Lint
+        map  <Leader>pt      :PymodeLintToggle <CR>
+        "
+        " this line is to prevent pymode from turning on line numbers at start
+        autocmd FileType python setlocal nonumber
 
-    noremap <F8> :PyLintAuto<CR>
-endif
+        noremap <F8> :PyLintAuto<CR>
+    endif
 " }
 
 " Spelling Settings {
