@@ -212,10 +212,11 @@ ${color #888888}${cpugraph 25 ff0000 ff00ff}
 ${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${color #CCCCCC}$memperc% $membar
 ${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}   - ${color #CCCCCC}$swapperc% ${swapbar}
 ${color #888888}load: ( ${color #CCCCCC}$loadavg ${color #888888})
-${color #888888}procesos: ${color #CCCCCC}$processes	${color #888888}running: ${color #CCCCCC}$running_processes
+${color #888888}processes: ${color #CCCCCC}$processes	${color #888888}running: ${color #CCCCCC}$running_processes
 
 ${color lightgrey}Temperatures:
- CPU:$color ${i2c temp 2}C${color grey} - MB:$color ${i2c temp 1}C
+ #CPU:$color ${i2c temp 2}C${color grey} - MB:$color ${i2c temp 1}C
+ HDD:${color #888888}sda $color${hddtemp /dev/sda}C${color grey} 
 
 ${color #ffccaa}Net:${color #BBBBBB}eth1-
 ${color #888888}DOWN: ${color #CCCCCC}${downspeed eth1} k/s	    ${color #888888}UP: ${color #CCCCCC}${upspeed eth1} k/s
