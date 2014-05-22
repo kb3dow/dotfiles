@@ -1,10 +1,20 @@
 # set to yes if you want Conky to be forked in the background
-background no
+background yes
+# Use Xft?
+use_xft no
+# Xft font when Xft is enabled
+#xftfont monospace-8
+xftfont Liberation Sans:size=9
+xftalpha 1
+# Update interval in seconds
+update_interval 5
+total_run_times 0
 
 cpu_avg_samples 2
 net_avg_samples 2
 
 out_to_console no
+override_utf8_locale no
 
 # X font when Xft is disabled, you can pick one with program xfontsel
 #font 7x12
@@ -16,17 +26,16 @@ font 7x13
 #font -*-*-*-*-*-*-34-*-*-*-*-*-*-*
 #font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1
 
-# Use Xft?
-use_xft no
 
-# Xft font when Xft is enabled
-xftfont monospace-8
 
 # Create own window instead of using desktop (required in nautilus)
 own_window yes
 own_window_transparent yes
 own_window_colour brown
-own_window_type override
+#own_window_type override
+own_window_type desktop
+#own_window_argb_visual yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 # Text alpha when using Xft
 xftalpha 0.8
@@ -36,24 +45,20 @@ on_bottom yes
 # mail spool
 mail_spool $MAIL
 
-# Update interval in seconds
-update_interval 5
 
 # Use double buffering (reduces flicker, may not work for everyone)
 double_buffer yes
 
 # Minimum size of text area
 minimum_size 5 5
-#maximum_width 150
+#maximum_width 240
 
-# Draw shades?
 draw_shades no
-
-# Draw outlines?
 draw_outline no
-
+draw_outline no
 # Draw borders around text
 draw_borders yes
+draw_graph_borders no
 
 # Stippled borders?
 stippled_borders 0
@@ -200,7 +205,7 @@ uppercase no
 
 TEXT
 #${color white}[${color #00ff00}Berkelio${color white}][${color red}$nodename${color white}] -
-${color white}[${color red}$nodename${color white}] -
+${color white}Host: ${color red}$nodename${color white}
 ${color #888888}$sysname $kernel ${color #CCCCCC}on ${color #888888}$machine
 ${color #888888}Uptime: $uptime
 #${color #888888}${time %b/%a/%d}                     ${color #00ff00}${time %k:%M:%S}
@@ -210,7 +215,7 @@ ${color #ffccaa}Monitors-
 ${color #888888}cpu: ${color #CCCCCC}${cpu}% ${cpubar}
 ${color #888888}${cpugraph 25 ff0000 ff00ff}
 ${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${color #CCCCCC}$memperc% $membar
-${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}   - ${color #CCCCCC}$swapperc% ${swapbar}
+#${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}   - ${color #CCCCCC}$swapperc% ${swapbar}
 ${color #888888}load: ( ${color #CCCCCC}$loadavg ${color #888888})
 ${color #888888}processes: ${color #CCCCCC}$processes	${color #888888}running: ${color #CCCCCC}$running_processes
 
@@ -224,12 +229,24 @@ ${color #888888}${downspeedgraph eth1 25,100 ff0000 0000ff}	  ${color #888888}${
 ${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth1}	        ${color #888888}TOTAL: ${color #CCCCCC}${totalup eth1}
 
 ${color #ffccaa}Disk Use.
-${color #888888}root : ${color #CCCCCC}${fs_used /}${color #888888}/${color #CCCCCC}${fs_size /} ${color #888888}(${color #CCCCCC}${fs_free /} ${fs_free_perc /}% ${color #888888} free)
-       ${fs_bar /}
-${color #888888}boot : ${color #CCCCCC}${fs_used /boot}${color #888888}/${color #CCCCCC}${fs_size /boot} ${color #888888}(${color #CCCCCC}${fs_free /boot} ${fs_free_perc /boot}% ${color #888888} free)
-       ${fs_bar /boot}
-${color #888888}home : ${color #CCCCCC}${fs_used /home/rr}${color #888888}/${color #CCCCCC}${fs_size /home/rr} ${color #888888}(${color #CCCCCC}${fs_free /home/rr} ${fs_free_perc /home/rr}% ${color #888888} free)
-       ${fs_bar /home/rr}
+${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}${swapbar}
+${color #888888}root: ${color #CCCCCC}${fs_used /}${color #888888}/${color #CCCCCC}${fs_size /} ${color #888888}${fs_bar /}
+${color #888888}usr : ${color #CCCCCC}${fs_used /usr}${color #888888}/${color #CCCCCC}${fs_size /usr} ${color #888888}${fs_bar /usr}
+${color #888888}var : ${color #CCCCCC}${fs_used /var}${color #888888}/${color #CCCCCC}${fs_size /var} ${color #888888}${fs_bar /var}
+${color #888888}tmp : ${color #CCCCCC}${fs_used /tmp}${color #888888}/${color #CCCCCC}${fs_size /tmp} ${color #888888}${fs_bar /tmp}
+${color #888888}home: ${color #CCCCCC}${fs_used /home}${color #888888}/${color #CCCCCC}${fs_size /home} ${color #888888}${fs_bar /home}
+#${color #888888}root: ${color #CCCCCC}${fs_used /}${color #888888}/${color #CCCCCC}${fs_size /} ${color #888888}(${color #CCCCCC}${fs_free /} ${fs_free_perc /}% ${color #888888} free)
+#${fs_bar /}
+#${color #888888}boot : ${color #CCCCCC}${fs_used /boot}${color #888888}/${color #CCCCCC}${fs_size /boot} ${color #888888}(${color #CCCCCC}${fs_free /boot} ${fs_free_perc /boot}% ${color #888888} free)
+#${fs_bar /boot}
+#${color #888888}usr : ${color #CCCCCC}${fs_used /usr}${color #888888}/${color #CCCCCC}${fs_size /usr} ${color #888888}(${color #CCCCCC}${fs_free /usr} ${fs_free_perc /usr}% ${color #888888} free)
+#       ${fs_bar /usr}
+#${color #888888}var : ${color #CCCCCC}${fs_used /var}${color #888888}/${color #CCCCCC}${fs_size /var} ${color #888888}(${color #CCCCCC}${fs_free /var} ${fs_free_perc /var}% ${color #888888} free)
+#       ${fs_bar /var}
+#${color #888888}tmp : ${color #CCCCCC}${fs_used /tmp}${color #888888}/${color #CCCCCC}${fs_size /tmp} ${color #888888}(${color #CCCCCC}${fs_free /tmp} ${fs_free_perc /tmp}% ${color #888888} free)
+#       ${fs_bar /tmp}
+#${color #888888}home : ${color #CCCCCC}${fs_used /home}${color #888888}/${color #CCCCCC}${fs_size /home} ${color #888888}(${color #CCCCCC}${fs_free /home} ${fs_free_perc /home}% ${color #888888} free)
+#       ${fs_bar /home}
 
 ${color #ffccaa}Processor Use.
 ${color #CCCCCC}Name              PID     CPU%   MEM%
@@ -245,4 +262,22 @@ ${color #888888} ${top name 5} ${top pid 5} ${top cpu 5} ${top mem 5}
 #${color #888888}Tiempo : ${color #cccccc}${execi 25 xmmsctrl print %m%n} ${color #888888}( ${color #cccccc}${execi 25 xmmsctrl print %M%n} ${color #888888})
 #${color #888888}Lista  : ${color #cccccc}${execi 25 xmmsctrl getpos} ${color #888888}/${color #CCCCCC}${execi 25 cat /tmp/xmms-info | grep Tunes | cut -d ":" -f2}
 #
-  #${color #ddaa00}${execi 8 xmmsbar}
+#${color #ddaa00}${execi 8 xmmsbar}
+
+#Short Keys for CrunchBang Linux
+S H O R T C U T    K E Y S
+${hr}
+Alt+F2$alignr Run Dialog
+Alt+F3$alignr Alt Menu
+Super+Space$alignr Main Menu
+Super+Tab$alignr Client Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+m$alignr Media Player
+Super+w$alignr Web Browser
+Super+h$alignr Task Manager
+Super+l$alignr Lock Screen
+Super+v$alignr Volume Control
+Super+x$alignr Logout
+PrtSc$alignr Screenshot
