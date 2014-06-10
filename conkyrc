@@ -40,7 +40,7 @@ own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 # Text alpha when using Xft
 xftalpha 0.8
 
-on_bottom yes
+##on_bottom yes
 
 # mail spool
 mail_spool $MAIL
@@ -64,7 +64,7 @@ draw_graph_borders no
 stippled_borders 0
 
 # border margins
-border_margin 10
+##border_margin 10
 
 # border width
 border_width 2
@@ -86,7 +86,7 @@ gap_x 20
 gap_y 20
 
 # Add spaces to keep things from moving about?  This only affects certain objects.
-use_spacer yes
+use_spacer right
 
 # Subtract file system buffers from used memory?
 no_buffers yes
@@ -210,7 +210,13 @@ ${color #888888}$sysname $kernel ${color #CCCCCC}on ${color #888888}$machine
 ${color #888888}Uptime: $uptime
 #${color #888888}${time %b/%a/%d}                     ${color #00ff00}${time %k:%M:%S}
 ${color #888888}${time %b/%a/%d}                     ${color #00ff00}${time %k:%M}
-${color white}${hr 2}
+##${voffset 14}${font :bold:size=10}${color1}WORLD TIME ${color4}${hr 2}${font}${color3}
+
+${color #ffccaa}World Time-
+${color3}India: ${goto 81} ${color1}${tztime Asia/Calcutta %d-%H:%M} ${goto 160} ${color3}London: ${goto 230} ${color1}${tztime Europe/London  %d-%H:%M}
+${color3}Sydney: ${goto 81} ${color1}${tztime Australia/Sydney  %d-%H:%M} ${goto 160} ${color3}Tokyo: ${goto 230} ${color1}${tztime Asia/Tokyo  %d-%H:%M}
+#${color white}${hr 2}
+
 ${color #ffccaa}Monitors-
 ${color #888888}cpu: ${color #CCCCCC}${cpu}% ${cpubar}
 ${color #888888}${cpugraph 25 ff0000 ff00ff}
