@@ -20,7 +20,11 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 # set default editor
-export EDITOR=/usr/bin/vim
+if [ -f /usr/bin/vim ]; then
+    export EDITOR=/usr/bin/vim
+elif [ -f /usr/local/bin/vim ]; then
+    export EDITOR=/usr/local/bin/vim
+fi
 export TERM=xterm-256color
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.

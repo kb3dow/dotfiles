@@ -2,6 +2,8 @@
 background yes
 # Use Xft?
 use_xft no
+xftfont DroidSans:size=8.75
+xftalpha 0.1
 # Xft font when Xft is enabled
 #xftfont monospace-8
 xftfont Liberation Sans:size=9
@@ -58,7 +60,7 @@ draw_outline no
 draw_outline no
 # Draw borders around text
 draw_borders yes
-draw_graph_borders no
+draw_graph_borders yes
 
 # Stippled borders?
 stippled_borders 0
@@ -67,12 +69,13 @@ stippled_borders 0
 ##border_margin 10
 
 # border width
-border_width 2
+border_width 1
 
 # Default colors and also border colors
 default_color white
 default_shade_color white
 default_outline_color white
+default_graph_border_color red
 
 # Text alignment, other possible values are commented
 #alignment top_left
@@ -217,24 +220,32 @@ ${color3}India: ${goto 81} ${color1}${tztime Asia/Calcutta %d-%H:%M} ${goto 160}
 ${color3}Sydney: ${goto 81} ${color1}${tztime Australia/Sydney  %d-%H:%M} ${goto 160} ${color3}Tokyo: ${goto 230} ${color1}${tztime Asia/Tokyo  %d-%H:%M}
 #${color white}${hr 2}
 
-${color #ffccaa}Monitors-
-${color #888888}cpu: ${color #CCCCCC}${cpu}% ${cpubar}
-${color #888888}${cpugraph 25 ff0000 ff00ff}
-${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${color #CCCCCC}$memperc% $membar
-#${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}   - ${color #CCCCCC}$swapperc% ${swapbar}
-${color #888888}load: ( ${color #CCCCCC}$loadavg ${color #888888})
-${color #888888}processes: ${color #CCCCCC}$processes	${color #888888}running: ${color #CCCCCC}$running_processes
+${color #CC9900}CPU Usage ${hr 2}$color
+#${color #42AE4A}CPU (Avg):${color #42AE4A} ${freq_g cpu0}Ghz ${color lightgrey}${cpu cpu0}% ${alignr}${color #42AE4A}${cpubar cpu0 5,80}
+#${color #42AE4A}Core 1:${color #42AE4A} ${freq_g cpu1}Ghz ${color lightgrey}${cpu cpu1}% ${alignr}${color #42AE4A}${cpubar cpu1 5,80}
+#${color #42AE4A}Core 2:${color #42AE4A} ${freq_g cpu2}Ghz ${color lightgrey}${cpu cpu2}% ${alignr}${color #42AE4A}${cpubar cpu2 5,80}
+#${color #42AE4A}Core 3:${color #42AE4A} ${freq_g cpu3}Ghz ${color lightgrey}${cpu cpu3}% ${alignr}${color #42AE4A}${cpubar cpu3 5,80}
+#${color #42AE4A}Core 4:${color #42AE4A} ${freq_g cpu4}Ghz ${color lightgrey}${cpu cpu4}% ${alignr}${color #42AE4A}${cpubar cpu4 5,80}
+${color #42AE4A}CPU1: ${color} ${color #00F5FF} ${cpu cpu1}% ${hwmon 0 temp 2}C$color    $alignr  ${color #42AE4A}CPU2: ${color} ${color #00F5FF} ${cpu cpu2}% ${hwmon 0 temp 3}C $color
+${color #888888}${cpugraph cpu1 25,140 FF0019 0AFF00 s} $alignr ${color #888888}${cpugraph cpu2 25,140 FF0019 0AFF00 s}
+${color #42AE4A}CPU3: ${color} ${color #00F5FF} ${cpu cpu3}% ${hwmon 0 temp 11}C$color    $alignr  ${color #42AE4A}CPU4: ${color} ${color #00F5FF} ${cpu cpu4}% ${hwmon 0 temp 12}C $color
+${color #888888}${cpugraph cpu3 25,140 FF0019 0AFF00 s} $alignr ${color #888888}${cpugraph cpu4 25,140 FF0019 0AFF00 s}
+${color #42AE4A}Average CPU${color}
+${color #888888}${cpugraph cpu0 42AE4A eeeeee}
+#${color #888888}cpu: ${color #CCCCCC}${cpu}% ${cpubar}
+#${color #888888}${cpugraph 25 ff0000 ff00ff}
+#${color #888888}${cpugraph cpu0 12,150 ff0019 0aff00 s}
+#${color #CC9900}Temperatures:
+#CPU:$color ${i2c temp 2}C${color grey} - MB:$color ${i2c temp 1}C
+#CPU:${color #888888}Core 0:$color ${hwmon 0 temp 2}C${color grey} - Core 1:$color ${hwmon 0 temp 3}C
+#CPU:${color #888888}Core 9:$color ${hwmon 0 temp 11}C${color grey} - Core 10:$color ${hwmon 0 temp 12}C
 
-${color lightgrey}Temperatures:
- #CPU:$color ${i2c temp 2}C${color grey} - MB:$color ${i2c temp 1}C
- HDD:${color #888888}sda $color${hddtemp /dev/sda}C${color grey} 
+${color #CC9900}Net ${hr 2}$color
+${color #BBBBBB}eth0 ${color #888888}DOWN: ${color #CCCCCC}${downspeed eth0}/s $alignr${color #888888}UP: ${color #CCCCCC}${upspeed eth0}/s
+${color #888888}${downspeedgraph eth0 25,140 ff0000 0000ff}	  ${color #888888}${upspeedgraph eth0 25,140 0000ff ff0000}
+${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth0}	        ${color #888888}TOTAL: ${color #CCCCCC}${totalup eth0}
 
-${color #ffccaa}Net:${color #BBBBBB}eth1-
-${color #888888}DOWN: ${color #CCCCCC}${downspeed eth1} k/s	    ${color #888888}UP: ${color #CCCCCC}${upspeed eth1} k/s
-${color #888888}${downspeedgraph eth1 25,100 ff0000 0000ff}	  ${color #888888}${upspeedgraph eth1 25,100 0000ff ff0000}
-${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth1}	        ${color #888888}TOTAL: ${color #CCCCCC}${totalup eth1}
-
-${color #ffccaa}Disk Use.
+${color #CC9900}Disk Use ${hr 2}$color
 ${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}${swapbar}
 ${color #888888}root: ${color #CCCCCC}${fs_used /}${color #888888}/${color #CCCCCC}${fs_size /} ${color #888888}${fs_bar /}
 ${color #888888}usr : ${color #CCCCCC}${fs_used /usr}${color #888888}/${color #CCCCCC}${fs_size /usr} ${color #888888}${fs_bar /usr}
@@ -253,10 +264,17 @@ ${color #888888}home: ${color #CCCCCC}${fs_used /home}${color #888888}/${color #
 #       ${fs_bar /tmp}
 #${color #888888}home : ${color #CCCCCC}${fs_used /home}${color #888888}/${color #CCCCCC}${fs_size /home} ${color #888888}(${color #CCCCCC}${fs_free /home} ${fs_free_perc /home}% ${color #888888} free)
 #       ${fs_bar /home}
+${color #CC9900}HDD Temp (C) ${color}${color #888888}sda: $color${hddtemp /dev/sda}${color grey} ${color}${color #888888}sdb: $color${hddtemp /dev/sdb}${color grey}
 
-${color #ffccaa}Processor Use.
+#${color #ffccaa}Processor Use.
+${color #CC9900}Processor Use ${hr 2}$color
+${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${color #CCCCCC}$memperc% $membar
+#${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}   - ${color #CCCCCC}$swapperc% ${swapbar}
+${color #888888}load: ( ${color #CCCCCC}$loadavg ${color #888888})
+${color #888888}processes: ${color #CCCCCC}$processes	${color #888888}running: ${color #CCCCCC}$running_processes
+
 ${color #CCCCCC}Name              PID     CPU%   MEM%
-${color #ddaa00} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+${color #ffccaa} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
 ${color #888888} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
 ${color #888888} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
 ${color #888888} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
@@ -271,19 +289,43 @@ ${color #888888} ${top name 5} ${top pid 5} ${top cpu 5} ${top mem 5}
 #${color #ddaa00}${execi 8 xmmsbar}
 
 #Short Keys for CrunchBang Linux
-S H O R T C U T    K E Y S
-${hr}
-Alt+F2$alignr Run Dialog
-Alt+F3$alignr Alt Menu
-Super+Space$alignr Main Menu
-Super+Tab$alignr Client Menu
-Super+t$alignr Terminal
-Super+f$alignr File Manager
-Super+e$alignr Editor
-Super+m$alignr Media Player
-Super+w$alignr Web Browser
-Super+h$alignr Task Manager
-Super+l$alignr Lock Screen
-Super+v$alignr Volume Control
-Super+x$alignr Logout
-PrtSc$alignr Screenshot
+#S H O R T C U T    K E Y S
+#${hr}
+#Alt+F2$alignr Run Dialog
+#Alt+F3$alignr Alt Menu
+#Super+Space$alignr Main Menu
+#Super+Tab$alignr Client Menu
+#Super+t$alignr Terminal
+#Super+f$alignr File Manager
+#Super+e$alignr Editor
+#Super+m$alignr Media Player
+#Super+w$alignr Web Browser
+#Super+h$alignr Task Manager
+#Super+l$alignr Lock Screen
+#Super+v$alignr Volume Control
+#Super+x$alignr Logout
+#PrtSc$alignr Screenshot
+#${font DejaVu Sans Mono :size=8}${execpi 60 DJS=`date +_%d`;cal -A 1 | cut -c44-100 --complement}
+#${font DejaVu Sans Mono :size=8}${execpi 60 DJS=`date +_%d`;cal -A 1 | sed s/"\(^\|[^0-9]\)$DJS"'\b'/'\1${color orange}'"$DJS"'$color'/}
+#${execpi 60 DJS=`date +%_d`; cal | sed s/”\(^\|[^0-9]\)$DJS”‘\b’/’\1${color orange}’”$DJS”‘$color’/}
+##################################
+##         CALENDAR             ##
+##################################
+## ##ORIG START##
+## ${voffset 4}${font DroidSans:bold:size=8}${color4}DATE${offset 8}${color6}${voffset -2}${hr 1}${font}
+## ${voffset 18}${font DroidSansMono:size=7.55}${color2}${alignc 60}${time %A}${font}
+## ${voffset -4}${font DroidSansFallback:bold:size=18}${if_match ${time %e}<=9}${color0}${alignc 65}${time %e}${font}${else}${if_match ${time %e}>=10}${color0}${alignc 60}${time %e}${endif}${endif}${font}
+## ${voffset 0}${font DroidSansMono:size=7.55}${color2}${alignc 60}${time %B}${font}
+## ${voffset 0}${font DroidSansMono:size=7.6}${color2}${alignc 60}${time %Y}${font}
+## ${voffset -80}${font CutOutsFor3DFX:size=67}${color7}${alignc 99}2${font}
+## ####
+## ## Uncomment for "SUNDAY = First Day-of-the-Week" (use mono fonts only)
+## ${voffset -70}${font DroidSansMono:size=7.55}${color0}${execpi 60 VinDSL_Cal_9=`date +%-d`; cal | sed -e 's/\r//g' -e 's/^/ /g' -e '1d' -e s/^/"\$\{offset 100"\}/ -e 's/\<'"$VinDSL_Cal_9"'\>/${color4}&${color0}/'}
+## # ${execpi 60 my_cal=$(date +%-d); cal | sed 's/\<'$my_cal'\>/${color1}&${color3}/g'}
+## ####
+## ## Uncomment for "MONDAY = First Day-of-the-Week" (use mono fonts only)
+## # ${voffset -68}${font DroidSansMono:size=7.55}${color0}${execpi 60 VinDSL_Cal_9=`date +%-d`; ncal -M -C -h | sed -e 's/\r//g' -e 's/^/ /g' -e '1d' -e s/^/"\$\{offset 100"\}/ -e 's/\<'"$VinDSL_Cal_9"'\>/${color4}&${color0}/'}
+## ##ORIG END##
+${color #CC9900}LOGGING ${hr 2}$color
+
+${color 339900}${execi 30 tail -n3 /var/log/messages | fold -w40}$color
