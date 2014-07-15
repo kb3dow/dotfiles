@@ -17,6 +17,7 @@ let g:My_PyMode_Enabled         = 0 " Note: use either syntastic or pymode
 let g:My_Spellcheck_Enabled     = 1
 let g:My_Syntastic_Enabled      = 1
 let g:My_Tabularize_Enabled     = 0
+let g:My_PyMode_Indent_Enabled  = 1
 let g:My_Vundle_Enabled         = 1 " Manage all the plugin bundles
 
 if has('unix')
@@ -36,6 +37,7 @@ else
     "colorscheme solarized
     "hi Normal ctermbg=DarkGrey ctermfg=White guifg=White guibg=grey20
     "
+    hi Search cterm=NONE ctermfg=yellow ctermbg=white
 endif
 
 " VIM_UI {
@@ -302,6 +304,13 @@ filetype off " Turn filetype on later. vundle needs it off
     endif
 " }
 
+" PyMode_Indent {
+    if g:My_PyMode_Indent_Enabled
+        Bundle 'hynek/vim-python-pep8-indent'
+        let g:pymode_indent = 0
+    endif
+" }
+        
 " And set some nice chars to do it with
 set listchars=tab:»\ ,eol:¬
 
