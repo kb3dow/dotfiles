@@ -141,4 +141,3 @@ esac
 #bind -v
 #alternate excape key
 #bindkey -M viins 'jj' vi-cmd-mode
-export POWERLINE_COMMAND=$HOME/.vim/bundle/powerline/scripts/powerline
