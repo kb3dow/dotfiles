@@ -80,34 +80,11 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
+fi
+if [ -f ~/.bash_exports ]; then
+    . ~/.bash_exports
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -121,23 +98,31 @@ if ! shopt -oq posix; then
   fi
 fi
 
-## OS specific aliases/actions
-_myos="$(uname)"
-### add alias as per os using $_myos ###
-case $_myos in
-    Linux)
-        # alias foo='/path/to/linux/bin/foo'
-        ;;
-    FreeBSD|OpenBSD)
-        # alias foo='/path/to/bsd/bin/foo'
-        ;;
-    SunOS)
-        # alias foo='/path/to/sunos/bin/foo'
-        ;;
-    *) ;;
-esac
+##SSH-AGENT -- START
+#trick of loading ssh-agent only once and making it available to all
+#shells/terminals started after login
+#Ref: http://www.cygwin.com/ml/cygwin/2001-06/msg00537.html
+#Ref: http://mah.everybody.org/docs/ssh
+SSH_ENV="$HOME/.ssh/environment"
 
-#bindkey -v
-#bind -v
-#alternate excape key
-#bindkey -M viins 'jj' vi-cmd-mode
+function start_agent {
+     echo "Initialising new SSH agent..."
+     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+     echo succeeded
+     chmod 600 "${SSH_ENV}"
+     . "${SSH_ENV}" > /dev/null
+     /usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
+
+if [ -f "${SSH_ENV}" ]; then
+     . "${SSH_ENV}" > /dev/null
+     #ps ${SSH_AGENT_PID} doesn't work under cywgin
+     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+         start_agent;
+     }
+else
+     start_agent;
+fi
+##SSH-AGENT -- END
