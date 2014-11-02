@@ -97,9 +97,6 @@ no_buffers yes
 # set to yes if you want all text to be in uppercase
 uppercase no
 
-#Use Imperial Units for Temperature
-temperature_unit fahrenheit
-
 # boinc (seti) dir
 # seti_dir /opt/seti
 
@@ -209,14 +206,6 @@ temperature_unit fahrenheit
 #${font Luxi Mono:size=10}justo como este texto que o google traduz fÃªz o portuguÃªs
 # stuff after 'TEXT' will be formatted on screen
 
-color1 8AD749 # Green
-color2 EECE01 # Yellow
-color3 F80E27 # Red
-#Macro for showing colored temp from hwtemp
-template2 ${color2}${if_match ${hwmon \1 temp \2}>75}${color orange}${if_match ${hwmon \1 temp \2}>90}${color red}${endif}${endif}${hwmon \1 temp \2}F${color1}
-#Usage Example
-#Temp ${template2 0 1}/${template2 1 1}/${template2 2 2}/${template2 2 4}
-
 TEXT
 #${color white}[${color #00ff00}Berkelio${color white}][${color red}$nodename${color white}] -
 ${color white}Host: ${color red}$nodename${color white}
@@ -231,21 +220,30 @@ ${color3}India: ${goto 81} ${color1}${tztime Asia/Calcutta %d-%H:%M} ${goto 160}
 ${color3}Sydney: ${goto 81} ${color1}${tztime Australia/Sydney  %d-%H:%M} ${goto 160} ${color3}Tokyo: ${goto 230} ${color1}${tztime Asia/Tokyo  %d-%H:%M}
 #${color white}${hr 2}
 
-${color #ffccaa}Monitors-
-${color #888888}cpu: ${color #CCCCCC}${cpu}% ${cpubar}
-${color #42AE4A}CPU1: ${color} ${color #00F5FF} ${cpu cpu1}% ${template2 0 1}
-${color #888888}${cpugraph 20 ff0000 ff00ff}
-${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${color #CCCCCC}$memperc% $membar
-#${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}   - ${color #CCCCCC}$swapperc% ${swapbar}
-${color #888888}load: ( ${color #CCCCCC}$loadavg ${color #888888})
-${color #888888}processes: ${color #CCCCCC}$processes	${color #888888}running: ${color #CCCCCC}$running_processes
+${color #CC9900}CPU Usage ${hr 2}$color
+#${color #42AE4A}CPU (Avg):${color #42AE4A} ${freq_g cpu0}Ghz ${color lightgrey}${cpu cpu0}% ${alignr}${color #42AE4A}${cpubar cpu0 5,80}
+#${color #42AE4A}Core 1:${color #42AE4A} ${freq_g cpu1}Ghz ${color lightgrey}${cpu cpu1}% ${alignr}${color #42AE4A}${cpubar cpu1 5,80}
+#${color #42AE4A}Core 2:${color #42AE4A} ${freq_g cpu2}Ghz ${color lightgrey}${cpu cpu2}% ${alignr}${color #42AE4A}${cpubar cpu2 5,80}
+#${color #42AE4A}Core 3:${color #42AE4A} ${freq_g cpu3}Ghz ${color lightgrey}${cpu cpu3}% ${alignr}${color #42AE4A}${cpubar cpu3 5,80}
+#${color #42AE4A}Core 4:${color #42AE4A} ${freq_g cpu4}Ghz ${color lightgrey}${cpu cpu4}% ${alignr}${color #42AE4A}${cpubar cpu4 5,80}
+${color #42AE4A}CPU1: ${color} ${color #00F5FF} ${cpu cpu1}% ${hwmon 0 temp 2}C$color    $alignr  ${color #42AE4A}CPU2: ${color} ${color #00F5FF} ${cpu cpu2}% ${hwmon 0 temp 3}C $color
+${color #888888}${cpugraph cpu1 25,140 FF0019 0AFF00 s} $alignr ${color #888888}${cpugraph cpu2 25,140 FF0019 0AFF00 s}
+${color #42AE4A}CPU3: ${color} ${color #00F5FF} ${cpu cpu3}% ${hwmon 0 temp 11}C$color    $alignr  ${color #42AE4A}CPU4: ${color} ${color #00F5FF} ${cpu cpu4}% ${hwmon 0 temp 12}C $color
+${color #888888}${cpugraph cpu3 25,140 FF0019 0AFF00 s} $alignr ${color #888888}${cpugraph cpu4 25,140 FF0019 0AFF00 s}
+${color #42AE4A}Average CPU${color}
+${color #888888}${cpugraph cpu0 42AE4A eeeeee}
+#${color #888888}cpu: ${color #CCCCCC}${cpu}% ${cpubar}
+#${color #888888}${cpugraph 25 ff0000 ff00ff}
+#${color #888888}${cpugraph cpu0 12,150 ff0019 0aff00 s}
+#${color #CC9900}Temperatures:
+#CPU:$color ${i2c temp 2}C${color grey} - MB:$color ${i2c temp 1}C
+#CPU:${color #888888}Core 0:$color ${hwmon 0 temp 2}C${color grey} - Core 1:$color ${hwmon 0 temp 3}C
+#CPU:${color #888888}Core 9:$color ${hwmon 0 temp 11}C${color grey} - Core 10:$color ${hwmon 0 temp 12}C
 
-${color lightgrey}HDD Temp: ${color #888888}sda $color${hddtemp /dev/sda}F${color grey} 
-
-${color #ffccaa}Net:${color #BBBBBB}eth1-
-${color #888888}DOWN: ${color #CCCCCC}${downspeed eth1} k/s${alignr}${color #888888}UP: ${color #CCCCCC}${upspeed eth1} k/s
-${color #888888}${downspeedgraph eth1 20,140 ff0000 0000ff}${alignr}${color #888888}${upspeedgraph eth1 20,140 0000ff ff0000}
-${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth1}${alignr}${color #888888}TOTAL: ${color #CCCCCC}${totalup eth1}
+${color #CC9900}Net ${hr 2}$color
+${color #BBBBBB}eth0 ${color #888888}DOWN: ${color #CCCCCC}${downspeed eth0}/s $alignr${color #888888}UP: ${color #CCCCCC}${upspeed eth0}/s
+${color #888888}${downspeedgraph eth0 25,140 ff0000 0000ff}	  ${color #888888}${upspeedgraph eth0 25,140 0000ff ff0000}
+${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth0}	        ${color #888888}TOTAL: ${color #CCCCCC}${totalup eth0}
 
 ${color #CC9900}Disk Use ${hr 2}$color
 ${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}${swapbar}
@@ -266,8 +264,15 @@ ${color #888888}home: ${color #CCCCCC}${fs_used /home}${color #888888}/${color #
 #       ${fs_bar /tmp}
 #${color #888888}home : ${color #CCCCCC}${fs_used /home}${color #888888}/${color #CCCCCC}${fs_size /home} ${color #888888}(${color #CCCCCC}${fs_free /home} ${fs_free_perc /home}% ${color #888888} free)
 #       ${fs_bar /home}
+${color #CC9900}HDD Temp (C) ${color}${color #888888}sda: $color${hddtemp /dev/sda}${color grey} ${color}${color #888888}sdb: $color${hddtemp /dev/sdb}${color grey}
 
-${color #ffccaa}Processor Use.
+#${color #ffccaa}Processor Use.
+${color #CC9900}Processor Use ${hr 2}$color
+${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${color #CCCCCC}$memperc% $membar
+#${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}   - ${color #CCCCCC}$swapperc% ${swapbar}
+${color #888888}load: ( ${color #CCCCCC}$loadavg ${color #888888})
+${color #888888}processes: ${color #CCCCCC}$processes	${color #888888}running: ${color #CCCCCC}$running_processes
+
 ${color #CCCCCC}Name              PID     CPU%   MEM%
 ${color #ffccaa} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
 ${color #888888} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
