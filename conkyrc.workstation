@@ -211,26 +211,37 @@ temperature_unit fahrenheit
 #${font Luxi Mono:size=10}justo como este texto que o google traduz fÃÂªz o portuguÃÂªs
 # stuff after 'TEXT' will be formatted on screen
 
-color1 8AD749 # Green
+color1 8AD749 # Light Green
+color4 42AE4A # Dark Green
 color2 EECE01 # Yellow
 color3 F80E27 # Red
+color5 orange # Orange
+#Macro for showing colored percent number 0<dark green<50<light green<65<yellow<80<orange<90<red<100
+template0 ${if_match \1<50}${color4}${else}${if_match \1<65}${color1}${else}${if_match \1<80}${color2}${else}${if_match \1<90}${color5}${else}${if_match \1<100}${color3}${else}${endif}${endif}${endif}${endif}${endif}\2%
+#Macro for showing colored HD temp
+template1 ${color2}${if_match ${hddtemp \1}>75}${color5}${if_match ${hddtemp \1}>90}${color3}${endif}${endif}${hddtemp \1}
 #Macro for showing colored temp from hwtemp
 template2 ${color2}${if_match ${hwmon \1 temp \2}>75}${color orange}${if_match ${hwmon \1 temp \2}>90}${color red}${endif}${endif}${hwmon \1 temp \2}F${color1}
 #Usage Example
 #Temp ${template2 0 1}/${template2 1 1}/${template2 2 2}/${template2 2 4}
+#Macro for showing colored fs_bar for a given partition
+template3 ${if_match ${fs_free_perc \2}<10}${color3}${else}${if_match ${fs_free_perc \2}<20}${color5}${else}${if_match ${fs_free_perc \2}<35}${color2}${else}${if_match ${fs_free_perc \2}<50}${color1}${else}${if_match ${fs_free_perc \2}<100}${color4}${else}${endif}${endif}${endif}${endif}${endif}${\1 \2}
+#Macro for showing colored swapbar/rambar
+template4 ${if_match ${\2}<50}${color4}${else}${if_match ${\2}<65}${color1}${else}${if_match ${\2}<80}${color2}${else}${if_match ${\2}<90}${color5}${else}${if_match ${\2}<100}${color3}${else}${endif}${endif}${endif}${endif}${endif}${\1 \2}
+##
 
 TEXT
 #${color white}[${color #00ff00}Berkelio${color white}][${color red}$nodename${color white}] -
 ${color white}Host: ${color2}$nodename${color white}
 ${color #888888}$sysname $kernel ${color #CCCCCC}on ${color #888888}$machine
-${color #888888}Uptime: $uptime
+${color4}Uptime: ${color1}$uptime
 #${color #888888}${time %b/%a/%d}                     ${color #00ff00}${time %k:%M:%S}
 ${color1}${time %a %b/%d} ${alignr}${time %H:%M}
 ##${voffset 14}${font :bold:size=10}${color1}WORLD TIME ${color4}${hr 2}${font}${color3}
 
 ${color #CC9900}World Time ${hr 2}$color
-${color3}India: ${goto 81} ${color1}${tztime Asia/Calcutta %d-%H:%M} ${goto 160} ${color3}London: ${goto 230} ${color1}${tztime Europe/London  %d-%H:%M}
-${color3}Sydney: ${goto 81} ${color1}${tztime Australia/Sydney  %d-%H:%M} ${goto 160} ${color3}Tokyo: ${goto 230} ${color1}${tztime Asia/Tokyo  %d-%H:%M}
+${color4}India: ${goto 81} ${color1}${tztime Asia/Calcutta %d-%H:%M} ${goto 160} ${color4}London: ${goto 230} ${color1}${tztime Europe/London  %d-%H:%M}
+${color4}Sydney: ${goto 81} ${color1}${tztime Australia/Sydney  %d-%H:%M} ${goto 160} ${color4}Tokyo: ${goto 230} ${color1}${tztime Asia/Tokyo  %d-%H:%M}
 
 ${color #CC9900}CPU Usage ${hr 2}$color
 ${color #42AE4A}CPU1: ${color} ${color #00F5FF} ${cpu cpu1}% ${template2 0 2}$alignr${color #42AE4A}CPU2: ${color}${color #00F5FF}${cpu cpu2}% ${template2 0 3}$color
@@ -241,23 +252,32 @@ ${color #42AE4A}Average CPU${color}
 ${color #888888}${cpugraph cpu0 42AE4A eeeeee}
 
 ${color #CC9900}Net ${hr 2}$color
+${if_existing /proc/net/route eth0}
 ${color #BBBBBB}eth0 ${color #888888}DOWN: ${color #CCCCCC}${downspeed eth0}/s $alignr${color #888888}UP: ${color #CCCCCC}${upspeed eth0}/s
 ${color #888888}${downspeedgraph eth0 25,140 ff0000 0000ff}	  ${color #888888}${upspeedgraph eth0 25,140 0000ff ff0000}
 ${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth0}	        ${color #888888}TOTAL: ${color #CCCCCC}${totalup eth0}
+${endif}
+${if_existing /proc/net/route eth1}
+${color #BBBBBB}eth1 ${color #888888}DOWN: ${color #CCCCCC}${downspeed eth1}/s $alignr${color #888888}UP: ${color #CCCCCC}${upspeed eth1}/s
+${color #888888}${downspeedgraph eth1 25,140 ff0000 0000ff}	  ${color #888888}${upspeedgraph eth1 25,140 0000ff ff0000}
+${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth1}	        ${color #888888}TOTAL: ${color #CCCCCC}${totalup eth1}
+${endif}
 
 ${color #CC9900}Disk Use ${hr 2}$color
-${color #888888}swap  : ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}${swapbar}
-${color #888888}root  : ${color #CCCCCC}${fs_used /}${color #888888}/${color #CCCCCC}${fs_size /} ${color #888888}${fs_bar /}
-${color #888888}usr   : ${color #CCCCCC}${fs_used /usr}${color #888888}/${color #CCCCCC}${fs_size /usr} ${color #888888}${fs_bar /usr}
-${color #888888}usrlcl: ${color #CCCCCC}${fs_used /usr/local}${color #888888}/${color #CCCCCC}${fs_size /usr/local} ${color #888888}${fs_bar /usr/local}
-${color #888888}var   : ${color #CCCCCC}${fs_used /var}${color #888888}/${color #CCCCCC}${fs_size /var} ${color #888888}${fs_bar /var}
-${color #888888}tmp   : ${color #CCCCCC}${fs_used /tmp}${color #888888}/${color #CCCCCC}${fs_size /tmp} ${color #888888}${fs_bar /tmp}
-${color #888888}home  : ${color #CCCCCC}${fs_used /home}${color #888888}/${color #CCCCCC}${fs_size /home} ${color #888888}${fs_bar /home}
-${color #CC9900}HDD Temp (C) ${color}${color #888888}sda: $color${hddtemp /dev/sda}${color grey} ${color}${color #888888}sdb: $color${hddtemp /dev/sdb}${color grey}
+${color #888888}swap  : ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}${template4 swapbar swapperc}
+${color #888888}root  : ${color #CCCCCC}${fs_used /}${color #888888}/${color #CCCCCC}${fs_size /} ${color #888888}${template3 fs_bar /}
+${color #888888}usr   : ${color #CCCCCC}${fs_used /usr}${color #888888}/${color #CCCCCC}${fs_size /usr} ${color #888888}${template3 fs_bar /usr}
+${color #888888}usrlcl: ${color #CCCCCC}${fs_used /usr/local}${color #888888}/${color #CCCCCC}${fs_size /usr/local} ${color #888888}${template3 fs_bar /usr/local}
+${color #888888}var   : ${color #CCCCCC}${fs_used /var}${color #888888}/${color #CCCCCC}${fs_size /var} ${color #888888}${template3 fs_bar /var}
+${color #888888}tmp   : ${color #CCCCCC}${fs_used /tmp}${color #888888}/${color #CCCCCC}${fs_size /tmp} ${color #888888}${template3 fs_bar /tmp}
+${color #888888}home  : ${color #CCCCCC}${fs_used /home}${color #888888}/${color #CCCCCC}${fs_size /home} ${color #888888}${template3 fs_bar /home}
+#${color #CC9900}HDD Temp (F) ${color}${color #888888}sda: $color${hddtemp /dev/sda}${color grey} ${color}${color #888888}sdb: $color${hddtemp /dev/sdb}${color grey}
+${color #CC9900}HDD Temp (F) ${color}${color #888888}sda: $color${hddtemp /dev/sda}${color grey} ${color}${color #888888}sdb: $color${template1 /dev/sdb}${color grey}
 
 #${color #ffccaa}Processor Use.
 ${color #CC9900}Processor Use ${hr 2}$color
-${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${color #CCCCCC}$memperc% $membar
+${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${template0 $memperc} ${template4 membar memperc}
+#${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${color #CCCCCC}$memperc% ${template4 membar memperc}
 #${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}   - ${color #CCCCCC}$swapperc% ${swapbar}
 ${color #888888}load: ( ${color #CCCCCC}$loadavg ${color #888888})
 ${color #888888}processes: ${color #CCCCCC}$processes	${color #888888}running: ${color #CCCCCC}$running_processes

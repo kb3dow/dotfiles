@@ -4,6 +4,7 @@
 " ! - exclamation point at the end of a setting tells vim to toggle the value
 
 let g:My_Airline_Enabled        = 0 "airline is a lightweight alternative for powerline, uses powerline-fonts
+let g:My_Colored_Cursor_Enabled = 1 " Colored cursor settings
 let g:My_CtrlP_Enabled          = 1
 let g:My_Fugitive_Enabled       = 1
 let g:My_Gundo_Enabled          = 0
@@ -17,6 +18,8 @@ let g:My_PyMode_Enabled         = 0 " Note: use either syntastic or pymode
 let g:My_Spellcheck_Enabled     = 1
 let g:My_Syntastic_Enabled      = 1
 let g:My_Tabularize_Enabled     = 0
+let g:My_Taglist_Enabled        = 1
+let g:My_PyLint_Mode_Enabled    = 0
 let g:My_PyMode_Indent_Enabled  = 1
 let g:My_Vundle_Enabled         = 1 " Manage all the plugin bundles
 
@@ -125,6 +128,23 @@ filetype off " Turn filetype on later. vundle needs it off
         let g:airline#extensions#tabline#left_sep = ' '
         let g:airline#extensions#tabline#left_alt_sep = '|'
         let g:airline_powerline_fonts = 1
+    endif
+" }
+
+" Colored Cursor {
+    if g:My_Colored_Cursor_Enabled
+        " Changing cursor colors depending on mode
+        " taken from http://vim.wikia.com/wiki/Configuring_the_cursor
+        if &term =~ "xterm\\|rxvt"
+          " use an orange cursor in insert mode
+          let &t_SI = "\<Esc>]12;orange\x7"
+          " use a red green otherwise
+          let &t_EI = "\<Esc>]12;green\x7"
+          silent !echo -ne "\033]12;red\007"
+          " reset cursor when vim exits
+          autocmd VimLeave * silent !echo -ne "\033]112\007"
+          " use \003]12;gray\007 for gnome-terminal
+        endif
     endif
 " }
 
@@ -276,6 +296,7 @@ filetype off " Turn filetype on later. vundle needs it off
 " Syntastic Settings {
     if g:My_Syntastic_Enabled
         Bundle 'scrooloose/syntastic'
+        "let g:syntastic_python_checkers=['pep8']
         let g:syntastic_python_checkers=['pep8','pylint']
         let g:syntastic_c_checkers=['make','splint']
         set statusline+=%#warningmsg#
@@ -285,6 +306,12 @@ filetype off " Turn filetype on later. vundle needs it off
         let g:syntastic_loc_list_height=5
         "highlight link SyntasticError SpellBad
         "highlight link SyntasticWarning SpellCap
+    endif
+" }
+
+" Taglist {
+    if g:My_Taglist_Enabled
+        Bundle 'vim-scripts/taglist'
     endif
 " }
 
@@ -308,6 +335,16 @@ filetype off " Turn filetype on later. vundle needs it off
     if g:My_PyMode_Indent_Enabled
         Bundle 'hynek/vim-python-pep8-indent'
         let g:pymode_indent = 0
+    endif
+" }
+
+" PyLintMode {
+    if g:My_PyLint_Mode_Enabled
+        Bundle 'vim-scripts/pylint-mode'
+        let g:PyLintCWindow   = 1
+        let g:PyLintSigns     = 1
+        let g:PyLintOnWrite   = 1
+        "let g:PyLintDissabledMessages = 'C0103,C0111,C0301,W0141,W0142,W0212,W0221,W0223,W0232,W0401,W0613,W0631,E1101,E1120,R0903,R0904,R0913'
     endif
 " }
         
