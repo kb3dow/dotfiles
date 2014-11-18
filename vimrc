@@ -40,7 +40,7 @@ else
     "colorscheme solarized
     "hi Normal ctermbg=DarkGrey ctermfg=White guifg=White guibg=grey20
     "
-    hi Search cterm=NONE ctermfg=yellow ctermbg=white
+    hi Search cterm=NONE ctermfg=grey ctermbg=black
 endif
 
 " VIM_UI {

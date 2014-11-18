@@ -1,0 +1,7 @@
+export POWERLINE_COMMAND=$HOME/.vim/bundle/powerline/scripts/powerline
+export ARDUINODIR=$HOME/arduino/arduino-1.0.5
+export BOARD=uno
+export SERIALDEV=/dev/ttyAMA0
+export JUMPHOST=moebius
+export JUMPHOST_USER=rr
+

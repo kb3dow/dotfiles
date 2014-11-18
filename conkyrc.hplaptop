@@ -226,11 +226,11 @@ ${color #CC9900}CPU Usage ${hr 2}$color
 #${color #42AE4A}Core 2:${color #42AE4A} ${freq_g cpu2}Ghz ${color lightgrey}${cpu cpu2}% ${alignr}${color #42AE4A}${cpubar cpu2 5,80}
 #${color #42AE4A}Core 3:${color #42AE4A} ${freq_g cpu3}Ghz ${color lightgrey}${cpu cpu3}% ${alignr}${color #42AE4A}${cpubar cpu3 5,80}
 #${color #42AE4A}Core 4:${color #42AE4A} ${freq_g cpu4}Ghz ${color lightgrey}${cpu cpu4}% ${alignr}${color #42AE4A}${cpubar cpu4 5,80}
-${color #42AE4A}CPU1: ${color} ${color #00F5FF} ${cpu cpu1}% ${hwmon 0 temp 2}C$color    $alignr  ${color #42AE4A}CPU2: ${color} ${color #00F5FF} ${cpu cpu2}% ${hwmon 0 temp 3}C $color
-${color #888888}${cpugraph cpu1 25,140 FF0019 0AFF00 s} $alignr ${color #888888}${cpugraph cpu2 25,140 FF0019 0AFF00 s}
-${color #42AE4A}CPU3: ${color} ${color #00F5FF} ${cpu cpu3}% ${hwmon 0 temp 11}C$color    $alignr  ${color #42AE4A}CPU4: ${color} ${color #00F5FF} ${cpu cpu4}% ${hwmon 0 temp 12}C $color
-${color #888888}${cpugraph cpu3 25,140 FF0019 0AFF00 s} $alignr ${color #888888}${cpugraph cpu4 25,140 FF0019 0AFF00 s}
-${color #42AE4A}Average CPU${color}
+#${color #42AE4A}CPU1: ${color} ${color #00F5FF} ${cpu cpu1}% ${hwmon 0 temp 2}C$color $alignr  ${color #42AE4A}CPU2: ${color} ${color #00F5FF} ${cpu cpu2}% ${hwmon 0 temp 3}C $color
+#${color #888888}${cpugraph cpu1 25,140 FF0019 0AFF00 s} $alignr ${color #888888}${cpugraph cpu2 25,140 FF0019 0AFF00 s}
+#${color #42AE4A}CPU3: ${color} ${color #00F5FF} ${cpu cpu3}% ${hwmon 0 temp 11}C$color    $alignr  ${color #42AE4A}CPU4: ${color} ${color #00F5FF} ${cpu cpu4}% ${hwmon 0 temp 12}C $color
+#${color #888888}${cpugraph cpu3 25,140 FF0019 0AFF00 s} $alignr ${color #888888}${cpugraph cpu4 25,140 FF0019 0AFF00 s}
+${color #42AE4A}CPU${color}${color #00F5FF} ${cpu cpu1}% ${hwmon 0 temp 1}C$color
 ${color #888888}${cpugraph cpu0 42AE4A eeeeee}
 #${color #888888}cpu: ${color #CCCCCC}${cpu}% ${cpubar}
 #${color #888888}${cpugraph 25 ff0000 ff00ff}
@@ -244,6 +244,10 @@ ${color #CC9900}Net ${hr 2}$color
 ${color #BBBBBB}eth0 ${color #888888}DOWN: ${color #CCCCCC}${downspeed eth0}/s $alignr${color #888888}UP: ${color #CCCCCC}${upspeed eth0}/s
 ${color #888888}${downspeedgraph eth0 25,140 ff0000 0000ff}	  ${color #888888}${upspeedgraph eth0 25,140 0000ff ff0000}
 ${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth0}	        ${color #888888}TOTAL: ${color #CCCCCC}${totalup eth0}
+
+${color #BBBBBB}eth1 ${color #888888}DOWN: ${color #CCCCCC}${downspeed eth1}/s $alignr${color #888888}UP: ${color #CCCCCC}${upspeed eth1}/s
+${color #888888}${downspeedgraph eth1 25,140 ff0000 0000ff}	  ${color #888888}${upspeedgraph eth1 25,140 0000ff ff0000}
+${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth1}	        ${color #888888}TOTAL: ${color #CCCCCC}${totalup eth1}
 
 ${color #CC9900}Disk Use ${hr 2}$color
 ${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}${swapbar}
@@ -287,7 +291,7 @@ ${color #888888} ${top name 5} ${top pid 5} ${top cpu 5} ${top mem 5}
 #${color #888888}Lista  : ${color #cccccc}${execi 25 xmmsctrl getpos} ${color #888888}/${color #CCCCCC}${execi 25 cat /tmp/xmms-info | grep Tunes | cut -d ":" -f2}
 #
 #${color #ddaa00}${execi 8 xmmsbar}
-
+#
 #Short Keys for CrunchBang Linux
 #S H O R T C U T    K E Y S
 #${hr}
