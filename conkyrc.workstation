@@ -218,16 +218,20 @@ color3 F80E27 # Red
 color5 orange # Orange
 #Macro for showing colored percent number 0<dark green<50<light green<65<yellow<80<orange<90<red<100
 template0 ${if_match \1<50}${color4}${else}${if_match \1<65}${color1}${else}${if_match \1<80}${color2}${else}${if_match \1<90}${color5}${else}${if_match \1<100}${color3}${else}${endif}${endif}${endif}${endif}${endif}\2%
+#Usage Example ${template0 $memperc} 
 #Macro for showing colored HD temp
 template1 ${color2}${if_match ${hddtemp \1}>75}${color5}${if_match ${hddtemp \1}>90}${color3}${endif}${endif}${hddtemp \1}
+#Usage Example  $color${template1 /dev/sdb}
 #Macro for showing colored temp from hwtemp
 template2 ${color2}${if_match ${hwmon \1 temp \2}>75}${color orange}${if_match ${hwmon \1 temp \2}>90}${color red}${endif}${endif}${hwmon \1 temp \2}F${color1}
 #Usage Example
 #Temp ${template2 0 1}/${template2 1 1}/${template2 2 2}/${template2 2 4}
 #Macro for showing colored fs_bar for a given partition
 template3 ${if_match ${fs_free_perc \2}<10}${color3}${else}${if_match ${fs_free_perc \2}<20}${color5}${else}${if_match ${fs_free_perc \2}<35}${color2}${else}${if_match ${fs_free_perc \2}<50}${color1}${else}${if_match ${fs_free_perc \2}<100}${color4}${else}${endif}${endif}${endif}${endif}${endif}${\1 \2}
+#Usage Example ${template3 fs_bar /}
 #Macro for showing colored swapbar/rambar
 template4 ${if_match ${\2}<50}${color4}${else}${if_match ${\2}<65}${color1}${else}${if_match ${\2}<80}${color2}${else}${if_match ${\2}<90}${color5}${else}${if_match ${\2}<100}${color3}${else}${endif}${endif}${endif}${endif}${endif}${\1 \2}
+#Usage Example${template4 swapbar swapperc}
 ##
 
 TEXT
@@ -277,8 +281,6 @@ ${color #CC9900}HDD Temp (F) ${color}${color #888888}sda: $color${hddtemp /dev/s
 #${color #ffccaa}Processor Use.
 ${color #CC9900}Processor Use ${hr 2}$color
 ${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${template0 $memperc} ${template4 membar memperc}
-#${color #888888}ram : ${color #CCCCCC}$mem${color #888888}/${color #CCCCCC}$memmax ${color #888888}- ${color #CCCCCC}$memperc% ${template4 membar memperc}
-#${color #888888}swap: ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}   - ${color #CCCCCC}$swapperc% ${swapbar}
 ${color #888888}load: ( ${color #CCCCCC}$loadavg ${color #888888})
 ${color #888888}processes: ${color #CCCCCC}$processes	${color #888888}running: ${color #CCCCCC}$running_processes
 
