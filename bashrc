@@ -98,22 +98,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-## OS specific aliases/actions
-_myos="$(uname)"
-### add alias as per os using $_myos ###
-case $_myos in
-    Linux)
-        # alias foo='/path/to/linux/bin/foo'
-        ;;
-    FreeBSD|OpenBSD)
-        # alias foo='/path/to/bsd/bin/foo'
-        ;;
-    SunOS)
-        # alias foo='/path/to/sunos/bin/foo'
-        ;;
-    *) ;;
-esac
-
 source ~/.bash_functions
 source ~/.bash_exports
 
