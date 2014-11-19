@@ -77,7 +77,7 @@ border_width 1
 default_color white
 default_shade_color white
 default_outline_color white
-default_graph_border_color red
+#default_graph_border_color red
 
 # Text alignment, other possible values are commented
 #alignment top_left
@@ -217,7 +217,7 @@ color2 EECE01 # Yellow
 color3 F80E27 # Red
 color5 orange # Orange
 #Macro for showing colored percent number 0<dark green<50<light green<65<yellow<80<orange<90<red<100
-template0 ${if_match \1<50}${color4}${else}${if_match \1<65}${color1}${else}${if_match \1<80}${color2}${else}${if_match \1<90}${color5}${else}${if_match \1<100}${color3}${else}${endif}${endif}${endif}${endif}${endif}\2%
+template0 ${if_match \1<50}${color4}${else}${if_match \1<65}${color1}${else}${if_match \1<80}${color2}${else}${if_match \1<90}${color5}${else}${if_match \1<100}${color3}${else}${endif}${endif}${endif}${endif}${endif}\1%
 #Usage Example ${template0 $memperc} 
 #Macro for showing colored HD temp
 template1 ${color2}${if_match ${hddtemp \1}>75}${color5}${if_match ${hddtemp \1}>90}${color3}${endif}${endif}${hddtemp \1}
@@ -268,13 +268,13 @@ ${color #888888}TOTAL: ${color #CCCCCC}${totaldown eth1}	        ${color #888888
 ${endif}
 
 ${color #CC9900}Disk Use ${hr 2}$color
-${color #888888}swap  : ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}${template4 swapbar swapperc}
-${color #888888}root  : ${color #CCCCCC}${fs_used /}${color #888888}/${color #CCCCCC}${fs_size /} ${color #888888}${template3 fs_bar /}
-${color #888888}usr   : ${color #CCCCCC}${fs_used /usr}${color #888888}/${color #CCCCCC}${fs_size /usr} ${color #888888}${template3 fs_bar /usr}
-${color #888888}usrlcl: ${color #CCCCCC}${fs_used /usr/local}${color #888888}/${color #CCCCCC}${fs_size /usr/local} ${color #888888}${template3 fs_bar /usr/local}
-${color #888888}var   : ${color #CCCCCC}${fs_used /var}${color #888888}/${color #CCCCCC}${fs_size /var} ${color #888888}${template3 fs_bar /var}
-${color #888888}tmp   : ${color #CCCCCC}${fs_used /tmp}${color #888888}/${color #CCCCCC}${fs_size /tmp} ${color #888888}${template3 fs_bar /tmp}
-${color #888888}home  : ${color #CCCCCC}${fs_used /home}${color #888888}/${color #CCCCCC}${fs_size /home} ${color #888888}${template3 fs_bar /home}
+${color #888888}swap : ${color #CCCCCC}$swap${color #888888}/${color #CCCCCC}$swapmax ${color #888888}${template4 swapbar swapperc}
+${color #888888}root : ${color #CCCCCC}${fs_used /}${color #888888}/${color #CCCCCC}${fs_size /} ${color #888888}${template3 fs_bar /}
+${color #888888}usr  : ${color #CCCCCC}${fs_used /usr}${color #888888}/${color #CCCCCC}${fs_size /usr} ${color #888888}${template3 fs_bar /usr}
+${color #888888}ulcl : ${color #CCCCCC}${fs_used /usr/local}${color #888888}/${color #CCCCCC}${fs_size /usr/local} ${color #888888}${template3 fs_bar /usr/local}
+${color #888888}var  : ${color #CCCCCC}${fs_used /var}${color #888888}/${color #CCCCCC}${fs_size /var} ${color #888888}${template3 fs_bar /var}
+${color #888888}tmp  : ${color #CCCCCC}${fs_used /tmp}${color #888888}/${color #CCCCCC}${fs_size /tmp} ${color #888888}${template3 fs_bar /tmp}
+${color #888888}home : ${color #CCCCCC}${fs_used /home}${color #888888}/${color #CCCCCC}${fs_size /home} ${color #888888}${template3 fs_bar /home}
 #${color #CC9900}HDD Temp (F) ${color}${color #888888}sda: $color${hddtemp /dev/sda}${color grey} ${color}${color #888888}sdb: $color${hddtemp /dev/sdb}${color grey}
 ${color #CC9900}HDD Temp (F) ${color}${color #888888}sda: $color${hddtemp /dev/sda}${color grey} ${color}${color #888888}sdb: $color${template1 /dev/sdb}${color grey}
 
