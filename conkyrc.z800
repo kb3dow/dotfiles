@@ -280,6 +280,7 @@ ${color #888888}usrlcl: ${color #CCCCCC}${fs_used /usr/local}${color #888888}/${
 ${color #888888}var   : ${color #CCCCCC}${fs_used /var}${color #888888}/${color #CCCCCC}${fs_size /var} ${color #888888}${fs_bar /var}
 ${color #888888}tmp   : ${color #CCCCCC}${fs_used /tmp}${color #888888}/${color #CCCCCC}${fs_size /tmp} ${color #888888}${fs_bar /tmp}
 ${color #888888}home  : ${color #CCCCCC}${fs_used /home}${color #888888}/${color #CCCCCC}${fs_size /home} ${color #888888}${fs_bar /home}
+${color #888888}bigdsk: ${color #CCCCCC}${fs_used /mnt/bigdisk}${color #888888}/${color #CCCCCC}${fs_size /mnt/bigdisk} ${color #888888}${fs_bar /mnt/bigdisk}
 #${color #888888}root: ${color #CCCCCC}${fs_used /}${color #888888}/${color #CCCCCC}${fs_size /} ${color #888888}(${color #CCCCCC}${fs_free /} ${fs_free_perc /}% ${color #888888} free)
 #${fs_bar /}
 #${color #888888}boot : ${color #CCCCCC}${fs_used /boot}${color #888888}/${color #CCCCCC}${fs_size /boot} ${color #888888}(${color #CCCCCC}${fs_free /boot} ${fs_free_perc /boot}% ${color #888888} free)
