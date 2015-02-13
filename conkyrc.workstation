@@ -209,7 +209,6 @@ temperature_unit fahrenheit
 #${font Verdana:size=10}as many times as I choose
 #${font Perry:size=10}Including UTF-8,
 #${font Luxi Mono:size=10}justo como este texto que o google traduz fÃÂªz o portuguÃÂªs
-# stuff after 'TEXT' will be formatted on screen
 
 color1 8AD749 # Light Green
 color4 42AE4A # Dark Green
@@ -234,6 +233,7 @@ template4 ${if_match ${\2}<50}${color4}${else}${if_match ${\2}<65}${color1}${els
 #Usage Example${template4 swapbar swapperc}
 ##
 
+# stuff after 'TEXT' will be formatted on screen
 TEXT
 #${color white}[${color #00ff00}Berkelio${color white}][${color red}$nodename${color white}] -
 ${color white}Host: ${color2}$nodename${color white}
