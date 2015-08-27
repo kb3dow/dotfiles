@@ -8,7 +8,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="tmux.conf tmux.powerline.conf tmux.conf.solarized.dark bashrc bash_aliases  bash_exports vimrc conkyrc.workstation conkyrc.laptop zshrc oh-my-zsh private Xresources"    # list of files/folders to symlink in homedir
+files="tmux.conf tmux.powerline.conf tmux.conf.solarized.dark bashrc bash_aliases  bash_exports vimrc conkyrc.workstation conkyrc.laptop zshrc oh-my-zsh private Xresources conky"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -32,7 +32,20 @@ for file in $files; do
         echo "Creating symlink to $file in home directory."
         ln -s $dir/$file ~/.$file
     fi
+    if [ -d ~/.$file ]; then
+        mv ~/.$file ~/dotfiles_old/
+    fi
+    if [ -d $dir/$file ]; then
+        echo "Creating symlink to $file in home directory."
+        ln -s $dir/$file ~/.$file
+    fi
 done
+
+#git clone weather icons
+cd $HOME/dotfiles/conky/weather
+git clone git://github.com/jason0x43/jc-weather.git
+ln -s jc-weather/icons/avman/ icons
+
 
 #Things TODO
 #Check if vim is installed, if not print info

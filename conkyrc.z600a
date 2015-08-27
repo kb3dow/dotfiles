@@ -1,0 +1,139 @@
+#RR layout/colors, ideas aken from https://linuxowns.wordpress.com/2008/04/04/create-a-custum-conky-setup/
+background yes
+use_xft yes
+xftfont 123:size=8
+xftalpha 0.1
+update_interval 2
+total_run_times 0
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,belowicky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 250 5
+maximum_width 400
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color gray
+default_shade_color red
+default_outline_color green
+alignment top_right
+gap_x 10
+gap_y 10
+no_buffers no
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 4
+override_utf8_locale yes
+use_spacer right
+text_buffer_size 256
+temperature_unit fahrenheit
+
+color1 42AE4A # Dark Green
+color2 8AD749 # Light Green
+color3 EECE01 # Yellow
+color4 orange # Orange
+color5 F80E27 # Red
+#Macro for showing colored percent number 0<dark green<50<light green<65<yellow<80<orange<90<red<100
+template0 ${if_match \1<50}${color1}${else}${if_match \1<65}${color2}${else}${if_match \1<80}${color3}${else}${if_match \1<90}${color4}${else}${if_match \1<100}${color5}${else}${endif}${endif}${endif}${endif}${endif}\1%
+#Usage Example ${template0 $memperc} 
+#Macro for showing colored HD temp
+template1 ${color3}${if_match ${hddtemp \1}>75}${color4}${if_match ${hddtemp \1}>90}${color5}${endif}${endif}${hddtemp \1}
+#Usage Example  $color${template1 /dev/sdb}
+#Macro for showing colored temp from hwtemp
+template2 ${color3}${if_match ${hwmon \1 temp \2}>75}${color orange}${if_match ${hwmon \1 temp \2}>90}${color red}${endif}${endif}${hwmon \1 temp \2}F
+#Usage Example
+#Temp ${template2 0 1}/${template2 1 1}/${template2 2 2}/${template2 2 4}
+#Macro for setting color based on a function f and a parameter p, darkGreen if f(p)<50, lightGreen if f(p)<65, orange if f(p)<80, yellow if f(p)<90, else red.
+template3 ${if_match ${\1 \2}<10}${color5}${else}${if_match ${\1 \2}<20}${color4}${else}${if_match ${\1 \2}<35}${color3}${else}${if_match ${\1 \2}<50}${color2}${else}${if_match ${\1 \2}<100}${color1}${else}${endif}${endif}${endif}${endif}${endif}
+template5 ${if_match ${\1 \2}<50}${color1}${else}${if_match ${\1 \2}<65}${color2}${else}${if_match ${\1 \2}<80}${color3}${else}${if_match ${\1 \2}<90}${color4}${else}${if_match ${\1 \2}<100}${color5}${else}${endif}${endif}${endif}${endif}${endif}
+#Usage Example ${template3 fs_bar /}
+#Macro for showing changing color depending on 1 % usage parameter
+template4 ${if_match ${\1}<50}${color1}${else}${if_match ${\1}<65}${color2}${else}${if_match ${\1}<80}${color3}${else}${if_match ${\1}<90}${color4}${else}${if_match ${\1}<100}${color5}${else}${endif}${endif}${endif}${endif}${endif}
+#Usage Example${template4 swapperc}
+##
+TEXT
+## ${execi 900 bash $HOME/.conky/weather/getWeatherData.sh} ##Now comes via cron
+${font openlogos:size=20}raj${font Arial:size=20}${color Tan1}-${color Ivory}zeus
+${font Arial:bold:size=10}${color Tan2}WEATHER ${color DarkSlateGray}${hr 2}
+${image /home/raj/.conky/weather/now.png -p -10,70 -s 108x65}
+##${color Tan1}${image /home/raj/.conky/icons/storage20.png -p 10,200 -s 20x20}
+${voffset -50}
+${font}
+${alignr}${color DimGray}${exec python $HOME/.conky/weather/getWeatherField.py  current_observation display_location full}
+${alignr}${color DimGray}${exec python $HOME/.conky/weather/getWeatherField.py  current_observation weather}
+${alignr}${color DimGray}Temp: ${exec python $HOME/.conky/weather/getWeatherField.py  current_observation temp_f}°F Feels like ${exec python $HOME/.conky/weather/getWeatherField.py  current_observation feelslike_f}°F
+${alignr}${color DimGray}Wind: ${execi 1800 python $HOME/.conky/weather/getWeatherField.py  current_observation wind_string}
+${voffset -25}
+${color DimGray}
+${font Arial:bold:size=10}${color Tan1}SYSTEM ${color DarkSlateGray} ${hr 2}
+$font${color DimGray}$sysname $kernel $alignr $machine
+Intel Pentium D $alignr${freq_g cpu0}Ghz
+Uptime $alignr${uptime}
+File System $alignr${fs_type}
+
+${voffset -25}
+${font Arial:bold:size=10}${color Tan1}PROCESSORS ${color DarkSlateGray}${hr 2}
+$font${color DimGray}CPU1  ${template2 0 2} ${template5 cpu cpu1}${cpu cpu1}% ${template5 cpu cpu1}${cpubar cpu1}
+${color DimGray}CPU2  ${template2 0 3} ${template5 cpu cpu2}${cpu cpu2}% ${template5 cpu cpu2}${cpubar cpu2}
+${color DimGray}CPU3  ${template2 0 11} ${template5 cpu cpu3}${cpu cpu3}% ${template5 cpu cpu3}${cpubar cpu3}
+${color DimGray}CPU4  ${template2 0 12} ${template5 cpu cpu4}${cpu cpu4}% ${template5 cpu cpu4}${cpubar cpu4}
+
+${voffset -25}
+${font Arial:bold:size=10}${color Tan1}HDD ${color DarkSlateGray}${hr 2}
+$font${color DimGray}swap${goto 52}: ${swapmax}${goto 105}${template4 swapperc}${swapperc}%${alignr}${swapbar 6,120}
+${color DimGray}/root${goto 52}: ${fs_size /root}${goto 105}${template3 fs_free_perc /root}${fs_used_perc /root}%${alignr}${template3 fs_free_perc /root}${fs_bar 6,120 /root}
+${color DimGray}/usr${goto 52}: ${fs_size /usr}${goto 105}${template3 fs_free_perc /usr}${fs_used_perc /usr}%${alignr}${template3 fs_free_perc /usr}${fs_bar 6,120 /usr}
+${color DimGray}/usr/lcl${goto 52}: ${fs_size /usr/local}${goto 105}${template3 fs_free_perc /usr/local}${fs_used_perc /usr/local}%${alignr}${template3 fs_free_perc /usr/local}${fs_bar 6,120 /usr/local}
+${color DimGray}/var${goto 52}: ${fs_size /var}${goto 105}${template3 fs_free_perc /var}${fs_used_perc /var}%${alignr}${template3 fs_free_perc /var}${fs_bar 6,120 /var}
+${color DimGray}/tmp${goto 52}: ${fs_size /tmp}${goto 105}${template3 fs_free_perc /tmp}${fs_used_perc /tmp}%${alignr}${template3 fs_free_perc /tmp}${fs_bar 6,120 /tmp}
+${color DimGray}/home${goto 52}: ${fs_size /home}${goto 105}${template3 fs_free_perc /home}${fs_used_perc /home}%${alignr}${template3 fs_free_perc /home}${fs_bar 6,120 /home}
+
+${voffset -25}
+${font Arial:bold:size=10}${color Tan1}MEMORY ${color DarkSlateGray}${hr 2}
+$font${color DimGray}MEM $alignc $mem / $memmax $alignr ${template0 $memperc}
+$membar
+
+${voffset -25}
+${font Arial:bold:size=10}${color Tan1}TOP PROCESSES ${color DarkSlateGray}${hr 2}
+${voffset -20}
+$font${color DimGray}Processes: ${color Ivory}$processes	${color DimGray}Running: ${color Ivory}$running_processes
+${color Tan1}CPU usage${goto 160}PID${goto 230}CPU%${color DimGray}
+${top name 1}${goto 160}${top pid 1}${goto 230}${top cpu 1}
+${top name 2}${goto 160}${top pid 2}${goto 230}${top cpu 2}
+${top name 3}${goto 160}${top pid 3}${goto 230}${top cpu 3}
+
+${voffset -25}
+${color Tan1}Mem usage${goto 160}PID${goto 230}MEM%${color DimGray}
+${top_mem name 1}${goto 160}${top pid 1}${goto 230}${top mem 1}
+${top_mem name 2}${goto 160}${top pid 2}${goto 230}${top mem 2}
+${top_mem name 3}${goto 160}${top pid 3}${goto 230}${top mem 3}
+
+${voffset -25}
+${font Arial:bold:size=10}${color Tan2}NETWORK ${color DarkSlateGray}${hr 2}
+${voffset -35}
+${if_existing /proc/net/route eth0}
+$font${color DimGray}eth0 : ${addr eth0}
+${goto 5}${downspeedgraph eth0 24,108 fef7b2 e18522}${goto 135}${upspeedgraph eth0 24,108 fef7b2 e18522}
+${goto 5}Downlink: ${downspeed eth0}${goto 135}Uplink: ${upspeed eth0}
+${voffset -12}
+${goto 5}Downloaded: ${totaldown eth0}${goto 135}Uploaded: ${totalup eth0}
+${endif}
+${if_existing /proc/net/route eth1}
+${color DimGray}eth1 : ${addr eth1}
+${goto 5}${downspeedgraph eth1 24,108 fef7b2 e18522}${goto 135}${upspeedgraph eth1 24,108 fef7b2 e18522}
+${goto 5}Down: ${downspeed eth1}${goto 135}Up: ${upspeed eth1}
+${voffset -12}
+${goto 5}Downloaded: ${totaldown eth1}${goto 135}Uploaded: ${totalup eth1}
+${endif}
+${voffset -35}
+${font Arial:bold:size=10}${color Tan2}SYSLOG ${color DarkSlateGray}${hr 2}
+${voffset -35}
+${font}${color DimGray}
+${execi 600 dmesg -T |tail -n 3| sed 's/\[[a-zA-Z]* //'| sed 's/ [0-9]*\]/:/'| fold -w40}
+${font Arial:bold:size=10}${color Tan2}NEWS ${color DarkSlateGray}${hr 2}
+${voffset -35}
+${font}${color DimGray}
+${execi 600 cat $HOME/.conky/news/headlines}

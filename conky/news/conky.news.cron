@@ -1,0 +1,1 @@
+00 9-18 * * 1-5 $HOME/.conky/news/bbc-us.py 4> $HOME/.conky/news/headlines

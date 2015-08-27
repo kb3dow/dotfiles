@@ -3,16 +3,16 @@
 " <silent> tells not to echo to the statusline what it is doing during execution
 " ! - exclamation point at the end of a setting tells vim to toggle the value
 
-let g:My_Airline_Enabled        = 0 "airline is a lightweight alternative for powerline, uses powerline-fonts
+let g:My_Airline_Enabled        = 1 "airline is a lightweight alternative for powerline, uses powerline-fonts
 let g:My_Colored_Cursor_Enabled = 1 " Colored cursor settings
 let g:My_CtrlP_Enabled          = 1
 let g:My_Fugitive_Enabled       = 1
 let g:My_Gundo_Enabled          = 0
 let g:My_Matchit_Enabled        = 1
 let g:My_MBE_Enabled            = 0
-let g:My_NerdTree_Enabled       = 0
+let g:My_NerdTree_Enabled       = 1
 let g:My_Numbers_Enabled        = 0
-let g:My_Powerline_Enabled      = 1
+let g:My_Powerline_Enabled      = 0
 let g:My_PowerlineFont_Enabled  = 1
 let g:My_PyMode_Enabled         = 0 " Note: use either syntastic or pymode
 let g:My_Spellcheck_Enabled     = 1
@@ -57,9 +57,11 @@ endif
     set magic                   "for regular expressions turn magic on
     set showmatch               "show matching brackets when text indicator is over them
     set mat=2                   "how many tenths of a second to blink when matching brackets
+    set softtabstop=4           "Insert 4 spaces when tab is pressed
     set tabstop=4               "tabstops every 4 columns
     set shiftwidth=4            "4 cols for >> etc
     set expandtab               "convert tabs to spaces
+    set shiftround              "Round indent to nearest shiftwidth multiple
     set nowrapscan              "dont wrap around end when / searching
     set lbr                     "linebreak on 500 char
     set tw=500                  "linebreak on 500 char
@@ -215,7 +217,7 @@ filetype off " Turn filetype on later. vundle needs it off
     endif
 
     if g:My_Powerline_Enabled
-        Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+        Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
         set guifont=DejaVu\ Sans\ Mono
         "set guifont=Liberation\ Mono\ for\ Powerline\ 10
         set laststatus=2
@@ -299,6 +301,7 @@ filetype off " Turn filetype on later. vundle needs it off
         "let g:syntastic_python_checkers=['pep8']
         let g:syntastic_python_checkers=['pep8','pylint']
         let g:syntastic_c_checkers=['make','splint']
+        let g:syntastic_hs_checkers=['ghc-mod','hlint']
         set statusline+=%#warningmsg#
         set statusline+=%{SyntasticStatuslineFlag()}
         set statusline+=%*
@@ -311,7 +314,7 @@ filetype off " Turn filetype on later. vundle needs it off
 
 " Taglist {
     if g:My_Taglist_Enabled
-        Bundle 'vim-scripts/taglist'
+        Bundle 'vim-scripts/taglist.vim'
     endif
 " }
 
