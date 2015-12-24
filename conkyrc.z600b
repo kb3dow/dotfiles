@@ -20,7 +20,7 @@ draw_graph_borders yes
 default_color gray
 default_shade_color red
 default_outline_color green
-alignment top_right
+alignment top_left
 gap_x 10
 gap_y 10
 no_buffers no
