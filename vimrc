@@ -22,6 +22,7 @@ let g:My_Taglist_Enabled        = 1
 let g:My_PyLint_Mode_Enabled    = 0
 let g:My_PyMode_Indent_Enabled  = 1
 let g:My_Vundle_Enabled         = 1 " Manage all the plugin bundles
+let g:My_edit_gpg_file_Enabled  = 1 
 
 if has('unix')
     set t_Co=256
@@ -348,6 +349,40 @@ filetype off " Turn filetype on later. vundle needs it off
         let g:PyLintSigns     = 1
         let g:PyLintOnWrite   = 1
         "let g:PyLintDissabledMessages = 'C0103,C0111,C0301,W0141,W0142,W0212,W0221,W0223,W0232,W0401,W0613,W0631,E1101,E1120,R0903,R0904,R0913'
+    endif
+" }
+
+" Edit_gpg_file_Enabled {
+    if g:My_edit_gpg_file_Enabled
+        " Transparent editing of gpg encrypted files.
+        " By Wouter Hanegraaff
+        augroup encrypted
+          au!
+        
+          " First make sure nothing is written to ~/.viminfo while editing
+          " an encrypted file.
+          autocmd BufReadPre,FileReadPre *.gpg set viminfo=
+          " We don't want a various options which write unencrypted data to disk
+          autocmd BufReadPre,FileReadPre *.gpg set noswapfile noundofile nobackup
+
+          " Switch to binary mode to read the encrypted file
+          autocmd BufReadPre,FileReadPre *.gpg set bin
+          autocmd BufReadPre,FileReadPre *.gpg let ch_save = &ch|set ch=2
+          " (If you use tcsh, you may need to alter this line.)
+          autocmd BufReadPost,FileReadPost *.gpg '[,']!gpg --decrypt 2> /dev/null
+
+          " Switch to normal mode for editing
+          autocmd BufReadPost,FileReadPost *.gpg set nobin
+          autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
+          autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
+
+          " Convert all text to encrypted text before writing
+          " (If you use tcsh, you may need to alter this line.)
+          autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
+          " Undo the encryption so we are back in the normal text, directly
+          " after the file has been written.
+          autocmd BufWritePost,FileWritePost *.gpg u
+          augroup END
     endif
 " }
         
