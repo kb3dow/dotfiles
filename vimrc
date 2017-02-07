@@ -5,6 +5,7 @@
 
 let g:My_Airline_Enabled        = 1 "airline is a lightweight alternative for powerline, uses powerline-fonts
 let g:My_Colored_Cursor_Enabled = 1 " Colored cursor settings
+let g:My_Conky_Syntax_Enabled   = 1
 let g:My_CtrlP_Enabled          = 1
 let g:My_Fugitive_Enabled       = 1
 let g:My_Gundo_Enabled          = 0
@@ -151,6 +152,13 @@ filetype off " Turn filetype on later. vundle needs it off
     endif
 " }
 
+" Conky Syntax Settings {
+let g:My_Conky_Syntax_Enabled   = 1
+    if g:My_Conky_Syntax_Enabled
+        Bundle 'smancill/conky-syntax.vim'
+    endif
+" }
+
 " Fugitive Settings {
     if g:My_CtrlP_Enabled
         Bundle 'kien/ctrlp.vim'
@@ -197,6 +205,7 @@ filetype off " Turn filetype on later. vundle needs it off
     if g:My_NerdTree_Enabled
         Bundle 'scrooloose/nerdtree'
         map <F2> :NERDTreeToggle<CR>
+        map  <silent> <Leader>n3  :NERDTreeToggle<CR>
     endif
 " }
 "
