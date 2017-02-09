@@ -11,13 +11,13 @@ json_data = open(os.getenv("HOME")+json_filedir+json_filename)
 
 data = json.load(json_data)
 if (len(sys.argv) == 2):
-    print data[sys.argv[1]]
+    print (data[sys.argv[1]])
 elif (len(sys.argv) == 3):
-    print data[sys.argv[1]][sys.argv[2]]
+    print (data[sys.argv[1]][sys.argv[2]])
 elif (len(sys.argv) == 4):
-    print data[sys.argv[1]][sys.argv[2]][sys.argv[3]]
+    print (data[sys.argv[1]][sys.argv[2]][sys.argv[3]])
 else:
-    print "argument needed"
+    print ("argument needed")
 
 #pprint(data)
 #print data["current_observation"]["display_location"]["full"]
