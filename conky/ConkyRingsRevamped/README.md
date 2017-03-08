@@ -13,11 +13,9 @@ Ideas taken from this [this conky theme](http://trollpunny.deviantart.com/art/Co
   * Show news snippets
 
 # Links
-  * Home page: https://gitlab.com/o9000/tint2
-  * Git repository: https://gitlab.com/o9000/tint2.git
-  * Documentation: https://gitlab.com/o9000/tint2/wikis/home
-  * Downloads: https://gitlab.com/o9000/tint2-archive/tree/master or https://code.google.com/p/tint2/downloads/list
-  * Old project location (inactive): https://code.google.com/p/tint2
+  * [Original page](http://yesthisisme.deviantart.com/art/Conky-Conky-Conky-174343321)
+  * [Modified conky desktop page](http://trollpunny.deviantart.com/art/Conky-Rings-Revamped-591137228)
+
 
 # Screenshots
 
@@ -27,4 +25,4 @@ Ideas taken from this [this conky theme](http://trollpunny.deviantart.com/art/Co
 
 ## Modified desktop:
 
-![screenshot](http://gitlab.com/o9000/tint2/wikis/screenshot.png)
+![screenshot](https://github.com/kb3dow/dotfiles/raw/master/conky/ConkyRingsRevamped/screenshot.png)

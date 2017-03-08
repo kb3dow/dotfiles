@@ -47,6 +47,6 @@ default_color FFFFFF
 TEXT
 ${font Santana:size=14}${alignc}TO-DO LIST${alignr}${font Santana:size=12}(${lines /home/raj/notes.txt})${font}
 ${stippled_hr}
-${voffset 10}${execp ~/.Conky/viewnotes.sh}
+${voffset 10}${execp ~/.conky/conky/viewnotes.sh}
 
 # ${stippled_hr 1}

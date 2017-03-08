@@ -224,6 +224,9 @@ let g:My_Conky_Syntax_Enabled   = 1
 " Powerline Settings {
     if g:My_PowerlineFont_Enabled
         Bundle 'Lokaltog/powerline-fonts'
+        set guifont=Inconsolata\ for\ Powerline "make sure to escape the spaces in the name properly
+        " set guifont=DejaVu\ Sans\ Mono\ for\ Powerline "make sure to escape the spaces in the name properly
+        " set guifont=Source\ Code\ Pro\ for\ Powerline "make sure to escape the spaces in the name properly
     endif
 
     if g:My_Powerline_Enabled
