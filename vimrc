@@ -3,6 +3,9 @@
 " <silent> tells not to echo to the statusline what it is doing during execution
 " ! - exclamation point at the end of a setting tells vim to toggle the value
 
+" RR NOTE FOR FONTS: For vim fonts to work properly, get the powerline fonts from https://github.com/powerline/fonts
+" and put them in ~/.fonts/ and use the command fc-cache -fv to update the fonts cache,
+" see https://www.cyberciti.biz/faq/howto-debian-install-use-ms-windows-truetype-fonts-under-xorg/ for help
 let g:My_Airline_Enabled        = 1 "airline is a lightweight alternative for powerline, uses powerline-fonts
 let g:My_Colored_Cursor_Enabled = 1 " Colored cursor settings
 let g:My_Conky_Syntax_Enabled   = 1
