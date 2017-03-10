@@ -26,7 +26,7 @@ let g:My_Taglist_Enabled        = 1
 let g:My_PyLint_Mode_Enabled    = 0
 let g:My_PyMode_Indent_Enabled  = 1
 let g:My_Vundle_Enabled         = 1 " Manage all the plugin bundles
-let g:My_edit_gpg_file_Enabled  = 1 
+let g:My_edit_gpg_file_Enabled  = 1
 
 if has('unix')
     set t_Co=256
@@ -227,8 +227,8 @@ let g:My_Conky_Syntax_Enabled   = 1
 " Powerline Settings {
     if g:My_PowerlineFont_Enabled
         Bundle 'Lokaltog/powerline-fonts'
-        set guifont=Inconsolata\ for\ Powerline "make sure to escape the spaces in the name properly
-        " set guifont=DejaVu\ Sans\ Mono\ for\ Powerline "make sure to escape the spaces in the name properly
+        " set guifont=Inconsolata\ for\ Powerline "make sure to escape the spaces in the name properly
+        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline "make sure to escape the spaces in the name properly
         " set guifont=Source\ Code\ Pro\ for\ Powerline "make sure to escape the spaces in the name properly
     endif
 
@@ -354,6 +354,13 @@ let g:My_Conky_Syntax_Enabled   = 1
     if g:My_PyMode_Indent_Enabled
         Bundle 'hynek/vim-python-pep8-indent'
         let g:pymode_indent = 0
+        augroup vimrc_pymodecmds
+            autocmd!
+            " highlight characters past column 90
+            autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
+            autocmd FileType python match Excess /\%90v.*/
+            autocmd FileType python set nowrap
+            augroup END
     endif
 " }
 
@@ -373,7 +380,7 @@ let g:My_Conky_Syntax_Enabled   = 1
         " By Wouter Hanegraaff
         augroup encrypted
           au!
-        
+
           " First make sure nothing is written to ~/.viminfo while editing
           " an encrypted file.
           autocmd BufReadPre,FileReadPre *.gpg set viminfo=
@@ -400,7 +407,7 @@ let g:My_Conky_Syntax_Enabled   = 1
           augroup END
     endif
 " }
-        
+
 " And set some nice chars to do it with
 set listchars=tab:»\ ,eol:¬
 

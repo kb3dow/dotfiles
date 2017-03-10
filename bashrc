@@ -131,3 +131,6 @@ else
   start_agent;
 fi
 ### SETUP SSH AGENT END
+
+# added by Miniconda3 4.1.11 installer
+export PATH="$HOME/miniconda3/bin:$PATH"
