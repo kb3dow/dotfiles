@@ -78,6 +78,8 @@ endif
     set undoreload=1000
     " Don't use Ex mode, use Q for formatting
     map Q gq
+    " used tags in local dir and home dir
+    set tags=~/.tags/tags,~/.tags/ctags,~/.tags/ptags,tags
 
 
 
@@ -331,6 +333,8 @@ let g:My_Conky_Syntax_Enabled   = 1
 " Taglist {
     if g:My_Taglist_Enabled
         Bundle 'vim-scripts/taglist.vim'
+        nnoremap <silent> <F6> :TlistToggle<CR>
+        nmap <Leader>g, :TlistToggle<CR>
     endif
 " }
 
