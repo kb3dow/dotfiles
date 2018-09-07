@@ -13,20 +13,26 @@ let g:My_CtrlP_Enabled          = 1
 let g:My_LightLine_Enabled      = 0
 let g:My_NeoMake_Enabled        = 1
 let g:My_Syntastic_Enabled      = 1
+let g:My_Taglist_Enabled        = 1
+let g:My_PyLint_Mode_Enabled    = 0
+let g:My_PyMode_Indent_Enabled  = 1
 let g:My_Airline_Enabled        = 1 "airline is a lightweight alternative for powerline, uses powerline-fonts
-let g:My_PowerlineFont_Enabled  = 0
+let g:My_PowerlineFont_Enabled  = 1
+let g:My_NerdTree_Enabled       = 1
+let g:My_NerdCommenter_Enabled  = 1
+let g:My_edit_gpg_file_Enabled  = 1
 
 call plug#begin('~/.config/nvim/plugged')
 
 " Plugins {
+    " gruvbox colorscheme. Seems to work the best for me.
+    Plug 'morhetz/gruvbox'
     if g:My_CtrlP_Enabled
         Plug 'kien/ctrlp.vim' " ctrl-p is a fuzzy file finder.
     endif
     if g:My_CtrlP_Enabled
         Plug 'itchyny/lightline.vim' " lightline is a status line for nvim.
     endif
-    " gruvbox colorscheme. Seems to work the best for me.
-    Plug 'morhetz/gruvbox'
     if g:My_NeoMake_Enabled
         Plug 'neomake/neomake' " neomake is a code linting tool that runs in the background.
     endif
@@ -48,8 +54,23 @@ call plug#begin('~/.config/nvim/plugged')
     if g:My_Syntastic_Enabled
         Plug 'scrooloose/syntastic'
     endif
+    if g:My_Taglist_Enabled
+        Plug 'vim-scripts/taglist.vim'
+    endif
+    if g:My_PyLint_Mode_Enabled
+        Plug 'vim-scripts/pylint-mode'
+    endif
+    if g:My_PyMode_Indent_Enabled
+        Plug 'hynek/vim-python-pep8-indent'
+    endif
     if g:My_PowerlineFont_Enabled
-        Plug 'Lokaltog/powerline-fonts'
+        Plug 'powerline/fonts'
+    endif
+    if g:My_NerdTree_Enabled
+        Plug 'scrooloose/nerdtree'
+    endif
+    if g:My_NerdCommenter_Enabled
+        Plug 'scrooloose/nerdcommenter'
     endif
 
 " }
@@ -352,6 +373,37 @@ call plug#end()
         endif
     " }
 
+" Taglist {
+    if g:My_Taglist_Enabled
+        Plug 'vim-scripts/taglist.vim'
+        nnoremap <silent> <F6> :TlistToggle<CR>
+        nmap <Leader>g, :TlistToggle<CR>
+    endif
+" }
+
+" PyLintMode {
+    if g:My_PyLint_Mode_Enabled
+        Plug 'vim-scripts/pylint-mode'
+        let g:PyLintCWindow   = 1
+        let g:PyLintSigns     = 1
+        let g:PyLintOnWrite   = 1
+        "let g:PyLintDissabledMessages = 'C0103,C0111,C0301,W0141,W0142,W0212,W0221,W0223,W0232,W0401,W0613,W0631,E1101,E1120,R0903,R0904,R0913'
+    endif
+" }
+
+" PyMode_Indent {
+    if g:My_PyMode_Indent_Enabled
+        let g:pymode_indent = 0
+        augroup vimrc_pymodecmds
+            autocmd!
+            " highlight characters past column 90
+            autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
+            autocmd FileType python match Excess /\%90v.*/
+            autocmd FileType python set nowrap
+            augroup END
+    endif
+" }
+
 " Powerline Settings {
     if g:My_PowerlineFont_Enabled
         " set guifont=Inconsolata\ for\ Powerline "make sure to escape the spaces in the name properly
@@ -359,6 +411,65 @@ call plug#end()
         " set guifont=Source\ Code\ Pro\ for\ Powerline "make sure to escape the spaces in the name properly
     endif
 
+" }
+
+" NerdTree Settings {
+    if g:My_NerdTree_Enabled
+        map <F2> :NERDTreeToggle<CR>
+        map  <silent> <Leader>n3  :NERDTreeToggle<CR>
+    endif
+" }
+
+" NerdCommenter Settings {
+    " See https://github.com/scrooloose/nerdcommenter for usage
+    "
+    " [count]<leader>cc |NERDComComment|
+    " Comment out the current line or text selected in visual mode.
+    "
+    " [count]<leader>cn |NERDComNestedComment|
+    " Same as cc but forces nesting.
+    "
+    " [count]<leader>c<space> |NERDComToggleComment|
+    " Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa.
+
+    if g:My_NerdCommenter_Enabled
+        " Add spaces after comment delimiters by default
+        let g:NERDSpaceDelims = 1
+    endif
+" }
+
+" Edit_gpg_file_Enabled {
+    if g:My_edit_gpg_file_Enabled
+        " Transparent editing of gpg encrypted files.
+        " By Wouter Hanegraaff
+        augroup encrypted
+          au!
+
+          " First make sure nothing is written to ~/.viminfo while editing
+          " an encrypted file.
+          autocmd BufReadPre,FileReadPre *.gpg set viminfo=
+          " We don't want a various options which write unencrypted data to disk
+          autocmd BufReadPre,FileReadPre *.gpg set noswapfile noundofile nobackup
+
+          " Switch to binary mode to read the encrypted file
+          autocmd BufReadPre,FileReadPre *.gpg set bin
+          autocmd BufReadPre,FileReadPre *.gpg let ch_save = &ch|set ch=2
+          " (If you use tcsh, you may need to alter this line.)
+          autocmd BufReadPost,FileReadPost *.gpg '[,']!gpg --decrypt 2> /dev/null
+
+          " Switch to normal mode for editing
+          autocmd BufReadPost,FileReadPost *.gpg set nobin
+          autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
+          autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
+
+          " Convert all text to encrypted text before writing
+          " (If you use tcsh, you may need to alter this line.)
+          autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
+          " Undo the encryption so we are back in the normal text, directly
+          " after the file has been written.
+          autocmd BufWritePost,FileWritePost *.gpg u
+          augroup END
+    endif
 " }
 " }
 
