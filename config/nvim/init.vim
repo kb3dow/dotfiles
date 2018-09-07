@@ -20,7 +20,9 @@ let g:My_Airline_Enabled        = 1 "airline is a lightweight alternative for po
 let g:My_PowerlineFont_Enabled  = 1
 let g:My_NerdTree_Enabled       = 1
 let g:My_NerdCommenter_Enabled  = 1
+let g:My_Tabular_Enabled        = 1
 let g:My_edit_gpg_file_Enabled  = 1
+let g:airline_powerline_fonts = 1
 
 call plug#begin('~/.config/nvim/plugged')
 
@@ -71,6 +73,9 @@ call plug#begin('~/.config/nvim/plugged')
     endif
     if g:My_NerdCommenter_Enabled
         Plug 'scrooloose/nerdcommenter'
+    endif
+    if g:My_Tabular_Enabled
+        Plug 'godlygeek/tabular'
     endif
 
 " }
@@ -335,16 +340,17 @@ call plug#end()
     "  Airline {
         if g:My_Airline_Enabled
             let g:airline_powerline_fonts = 1
-            let g:airline#extensions#tabline#enabled = 2
-            let g:airline#extensions#tabline#fnamemod = ':t'
-            let g:airline#extensions#tabline#left_sep = ' '
-            let g:airline#extensions#tabline#left_alt_sep = '|'
-            let g:airline#extensions#tabline#right_sep = ' '
-            let g:airline#extensions#tabline#right_alt_sep = '|'
-            let g:airline_left_sep = ' '
-            let g:airline_left_alt_sep = '|'
-            let g:airline_right_sep = ' '
-            let g:airline_right_alt_sep = '|'
+            " Something here is breaking the arrows on the airline
+            " let g:airline#extensions#tabline#enabled = 2
+            " let g:airline#extensions#tabline#fnamemod = ':t'
+            " let g:airline#extensions#tabline#left_sep = ' '
+            " let g:airline#extensions#tabline#left_alt_sep = '|'
+            " let g:airline#extensions#tabline#right_sep = ' '
+            " let g:airline#extensions#tabline#right_alt_sep = '|'
+            " let g:airline_left_sep = ' '
+            " let g:airline_left_alt_sep = '|'
+            " let g:airline_right_sep = ' '
+            " let g:airline_right_alt_sep = '|'
             let g:airline_theme= 'gruvbox'
         endif
     "  }
@@ -435,6 +441,22 @@ call plug#end()
     if g:My_NerdCommenter_Enabled
         " Add spaces after comment delimiters by default
         let g:NERDSpaceDelims = 1
+    endif
+" }
+
+" Tabular Settings {
+    if g:My_Tabular_Enabled
+        " See more at http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
+        map   <silent> <Leader>a= :Tabularize /=<CR>
+        vmap  <silent> <Leader>a= :Tabularize /=<CR>
+        map   <silent> <Leader>a: :Tabularize /:<CR>
+        vmap  <silent> <Leader>a: :Tabularize /:<CR>
+        map   <silent> <Leader>a:: :Tabularize /:\zs<CR>
+        vmap  <silent> <Leader>a:: :Tabularize /:\zs<CR>
+        map   <silent> <Leader>a, :Tabularize /,<CR>
+        vmap  <silent> <Leader>a, :Tabularize /,<CR>
+        map   <silent> <Leader>a<Bar> :Tabularize /<Bar><CR>
+        vmap  <silent> <Leader>a<Bar> :Tabularize /<Bar><CR>
     endif
 " }
 
