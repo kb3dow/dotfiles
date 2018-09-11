@@ -8,21 +8,23 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 
-let g:My_Spellcheck_Enabled     = 1
-let g:My_CtrlP_Enabled          = 1
-let g:My_LightLine_Enabled      = 0
-let g:My_NeoMake_Enabled        = 1
-let g:My_Syntastic_Enabled      = 1
-let g:My_Taglist_Enabled        = 1
-let g:My_PyLint_Mode_Enabled    = 0
-let g:My_PyMode_Indent_Enabled  = 1
-let g:My_Airline_Enabled        = 1 "airline is a lightweight alternative for powerline, uses powerline-fonts
-let g:My_PowerlineFont_Enabled  = 1
-let g:My_NerdTree_Enabled       = 1
-let g:My_NerdCommenter_Enabled  = 1
-let g:My_Tabular_Enabled        = 1
-let g:My_edit_gpg_file_Enabled  = 1
-let g:airline_powerline_fonts = 1
+let g:My_Spellcheck_Enabled      = 1
+let g:My_CtrlP_Enabled           = 1
+let g:My_LightLine_Enabled       = 0
+let g:My_NeoMake_Enabled         = 1
+let g:My_Syntastic_Enabled       = 1
+let g:My_Taglist_Enabled         = 1
+let g:My_PyLint_Mode_Enabled     = 0
+let g:My_PyMode_Indent_Enabled   = 1
+let g:My_LaTexBox_Enabled        = 0
+let g:My_Airline_Enabled         = 1 "airline is a lightweight alternative for powerline, uses powerline-fonts
+let g:My_PowerlineFont_Enabled   = 1
+let g:My_NerdTree_Enabled        = 1
+let g:My_NerdCommenter_Enabled   = 1
+let g:My_Tabular_Enabled         = 1
+let g:My_TableMode_Enabled       = 1
+let g:My_VimIndentGuides_Enabled = 1
+let g:My_edit_gpg_file_Enabled   = 1
 
 call plug#begin('~/.config/nvim/plugged')
 
@@ -42,8 +44,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'davidhalter/jedi-vim'
     " Remove extraneious whitespace when edit mode is exited
     Plug 'thirtythreeforty/lessspace.vim'
-    " LaTeX editing
-    Plug 'LaTex-box-Team/LaTeX-Box'
+    if g:My_LaTexBox_Enabled
+        Plug 'LaTex-box-Team/LaTeX-Box' " LaTeX editing
+    endif
     " Status bar mods
     if g:My_Airline_Enabled
         Plug 'vim-airline/vim-airline'
@@ -76,6 +79,12 @@ call plug#begin('~/.config/nvim/plugged')
     endif
     if g:My_Tabular_Enabled
         Plug 'godlygeek/tabular'
+    endif
+    if g:My_TableMode_Enabled
+        Plug 'dhruvasagar/vim-table-mode'
+    endif
+    if g:My_VimIndentGuides_Enabled
+        Plug 'nathanaelkane/vim-indent-guides'
     endif
 
 " }
@@ -365,7 +374,6 @@ call plug#end()
 
     " Syntastic Settings {
         if g:My_Syntastic_Enabled
-            "let g:syntastic_python_checkers=['pep8']
             let g:syntastic_python_checkers=['pep8','pylint']
             let g:syntastic_c_checkers=['make','splint']
             let g:syntastic_hs_checkers=['ghc-mod','hlint']
@@ -443,7 +451,7 @@ call plug#end()
         let g:NERDSpaceDelims = 1
     endif
 " }
-
+"
 " Tabular Settings {
     if g:My_Tabular_Enabled
         " See more at http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
@@ -457,6 +465,20 @@ call plug#end()
         vmap  <silent> <Leader>a, :Tabularize /,<CR>
         map   <silent> <Leader>a<Bar> :Tabularize /<Bar><CR>
         vmap  <silent> <Leader>a<Bar> :Tabularize /<Bar><CR>
+    endif
+" }
+" Vim Table Mode Settings {
+    if g:My_TableMode_Enabled
+        " See https://github.com/dhruvasagar/vim-table-mode for more docs and
+        " use case examples
+        "  <leader>tm  invokes vim-table-mode
+    endif
+" }
+" Vim Indent Guide Settings {
+    if g:My_VimIndentGuides_Enabled
+        let g:indent_guides_guide_size = 1
+        let g:indent_guides_color_change_percent = 3
+        let g:indent_guides_enable_on_vim_startup = 1
     endif
 " }
 
