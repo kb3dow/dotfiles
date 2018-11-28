@@ -42,7 +42,13 @@ else
     syntax enable
     highlight CursorColumn ctermbg=Grey
     "set background=dark
+    " Color Scheme in normal vim mode
     "colorscheme solarized
+    colorscheme desert
+    if &diff
+        " Color Scheme in vimdiff mode
+        colorscheme evening
+    endif
     "hi Normal ctermbg=DarkGrey ctermfg=White guifg=White guibg=grey20
     "
     hi Search cterm=NONE ctermfg=grey ctermbg=black
