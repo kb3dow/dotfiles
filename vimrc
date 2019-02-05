@@ -217,6 +217,12 @@ let g:My_Conky_Syntax_Enabled   = 1
         Bundle 'scrooloose/nerdtree'
         map <F2> :NERDTreeToggle<CR>
         map  <silent> <Leader>n3  :NERDTreeToggle<CR>
+        " Open NerdTree if starting vim no command line arguments
+        autocmd StdinReadPre * let s:std_in=1
+        autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+        " Manage NerdTree Git plugin in the same if block
+        Bundle 'Xuyuanp/nerdtree-git-plugin'
     endif
 " }
 "
