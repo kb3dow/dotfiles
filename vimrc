@@ -76,8 +76,8 @@ endif
     set nowrapscan              "dont wrap around end when / searching
     set lbr                     "linebreak on 500 char
     set tw=500                  "linebreak on 500 char
-    set autochdir " automatically change window's cwd to file's dir
-    "set noautochdir "do not change window's cwd to file's dir
+    "set autochdir " automatically change window's cwd to file's dir
+    set noautochdir "do not change window's cwd to file's dir
     set undodir=~/.vim/undodir
     set undofile
     set undolevels=1000
