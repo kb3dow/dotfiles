@@ -33,11 +33,11 @@ for file in $files; do
         ln -s $dir/$file ~/.$file
     fi
     if [ -d ~/.$file ]; then
-        mv ~/.$file ~/dotfiles_old/
+        true #mv ~/.$file ~/dotfiles_old/
     fi
     if [ -d $dir/$file ]; then
-        echo "Creating symlink to $file in home directory."
-        ln -s $dir/$file ~/.$file
+        #echo "Creating symlink to $file in home directory."
+        true #ln -s $dir/$file ~/.$file
     fi
 done
 
