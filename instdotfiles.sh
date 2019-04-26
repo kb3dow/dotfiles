@@ -42,9 +42,11 @@ for file in $files; do
 done
 
 #git clone weather icons
-cd $HOME/dotfiles/conky/weather
-git clone git://github.com/jason0x43/jc-weather.git
-ln -s jc-weather/icons/avman/ icons
+if [ ! -d $HOME/dotfiles/conky/weather ]; then
+    cd $HOME/dotfiles/conky/weather
+    git clone git://github.com/jason0x43/jc-weather.git
+    ln -s jc-weather/icons/avman/ icons
+fi
 
 
 #Things TODO
