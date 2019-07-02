@@ -16,7 +16,8 @@ ignore-patterns=
 # Python code to execute, usually for sys.path manipulation such as
 # pygtk.require().
 #init-hook=
-init-hook='import sys; sys.path.append("/home/ubuntu/miniconda3/envs/TUPT/lib/python3.6/site-packages/"); sys.path.append("/home/ubuntu/tupt-root/"); '
+#init-hook='import sys; sys.path.append("/home/ubuntu/miniconda3/envs/TUPT/lib/python3.6/site-packages/"); sys.path.append("/home/ubuntu/tupt-root/"); '
+init-hook='import sys; sys.path.append("/home/rrajamani/.miniconda3/envs/PUGW/lib/python3.7/site-packages/"); sys.path.append("/home/rrajamani/altitude/OpsAndMaintenance/UserProvisioningTool/PUGWORKS"); '
 
 # Use multiple processes to speed up Pylint. Specifying 0 will auto-detect the
 # number of processors available to use.
@@ -29,7 +30,7 @@ limit-inference-results=100
 
 # List of plugins (as comma separated values of python modules names) to load,
 # usually to register additional checkers.
-load-plugins=
+load-plugins=pylint-django
 
 # Pickle collected data for later comparisons.
 persistent=yes
@@ -283,7 +284,7 @@ ignored-classes=optparse.Values,thread._local,_thread._local
 # (useful for modules/projects where namespaces are manipulated during runtime
 # and thus existing member attributes cannot be deduced by static analysis. It
 # supports qualified module names, as well as Unix pattern matching.
-ignored-modules=
+ignored-modules=ldap
 
 # Show a hint with possible names when a member name was not found. The aspect
 # of finding the hint is based on edit distance.
@@ -435,7 +436,8 @@ good-names=e,
            y,
            m,
            r,
-           p
+           p,
+           q
 
 # Include a hint for the correct naming format with invalid-name.
 include-naming-hint=no
