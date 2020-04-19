@@ -49,3 +49,5 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# for tmux that get a new SSH_AUTH_SOCK after disconnect/reconnect
+alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
