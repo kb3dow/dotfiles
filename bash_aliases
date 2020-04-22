@@ -50,4 +50,5 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # for tmux that get a new SSH_AUTH_SOCK after disconnect/reconnect
+# from https://stackoverflow.com/a/40967729/2187320
 alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
