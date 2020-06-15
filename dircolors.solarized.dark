@@ -1,5 +1,7 @@
 ##
-# RR NOTES: See https://www.noelbundick.com/posts/getting-started-bash-on-windows/
+# RR NOTES: Taken from https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-dark
+# Also see https://www.noelbundick.com/posts/getting-started-bash-on-windows/
+#
 ##
 # Exact Solarized Dark color theme for the color GNU ls utility.
 # Designed for dircolors (GNU coreutils) 5.97
