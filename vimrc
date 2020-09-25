@@ -24,6 +24,7 @@ let g:My_Syntastic_Enabled      = 1
 let g:My_Tabularize_Enabled     = 0
 let g:My_Taglist_Enabled        = 1
 let g:My_PyLint_Mode_Enabled    = 0
+let g:My_PyMode_Ale_Enabled     = 1
 let g:My_PyMode_Indent_Enabled  = 1
 let g:My_Vundle_Enabled         = 1 " Manage all the plugin bundles
 let g:My_edit_gpg_file_Enabled  = 1
@@ -117,6 +118,12 @@ endif
     imap <silent> <Leader>so <Esc>:set cursorcolumn   cursorline  <CR>a
     map  <silent> <Leader>sn      :set nocursorcolumn nocursorline  <CR>
     imap <silent> <Leader>sn <Esc>:set nocursorcolumn nocursorline  <CR>a
+	"Toggle relative line number
+	map  <silent> <Leader>rn       :set relativenumber! <CR>
+	imap <silent> <Leader>rn <Esc>:set relativenumber! <CR>a
+	"Toggle line number
+	map  <silent> <Leader>nn      :set number! <CR>
+	imap <silent> <Leader>nn <Esc>:set number! <CR>a
 " }
 
 filetype off " Turn filetype on later. vundle needs it off
@@ -127,6 +134,7 @@ filetype off " Turn filetype on later. vundle needs it off
 
         Bundle 'gmarik/vundle'
         Bundle 'scrooloose/nerdcommenter'
+		let g:NERDSpaceDelims = 1 " Put a space after the comment char
         Bundle 'davidhalter/jedi-vim'
         Bundle 'ervandew/supertab'
         Bundle 'altercation/vim-colors-solarized'
@@ -143,6 +151,8 @@ filetype off " Turn filetype on later. vundle needs it off
         let g:airline#extensions#tabline#left_sep = ' '
         let g:airline#extensions#tabline#left_alt_sep = '|'
         let g:airline_powerline_fonts = 1
+		let g:airline_theme = 'bubblegum'
+		let g:airline_solarized_bg='dark'
     endif
 " }
 
@@ -288,7 +298,8 @@ let g:My_Conky_Syntax_Enabled   = 1
         let g:pymode_lint = 1
         let g:pymode_lint_checker = "pep8"
         "let g:pymode_lint_checker = "pyflakes,pep8"
-        let g:pymode_lint_write = 1 " Auto check on save
+        let g:pymode_lint_write = 0 " Auto check on save
+		noremap <silent> <Leader>p        :PyLint <CR>
 
         " Support virtualenv
         let g:pymode_virtualenv = 1
@@ -329,8 +340,8 @@ let g:My_Conky_Syntax_Enabled   = 1
     if g:My_Syntastic_Enabled
         Bundle 'scrooloose/syntastic'
         "let g:syntastic_python_checkers=['pep8']
-        let g:syntastic_python_checkers=['pep8','pylint']
-        let g:syntastic_c_checkers=['make','splint']
+        "let g:syntastic_python_checkers=['pep8','pylint']
+        "let g:syntastic_c_checkers=['make','splint']
         let g:syntastic_hs_checkers=['ghc-mod','hlint']
         set statusline+=%#warningmsg#
         set statusline+=%{SyntasticStatuslineFlag()}
@@ -339,6 +350,16 @@ let g:My_Conky_Syntax_Enabled   = 1
         let g:syntastic_loc_list_height=5
         "highlight link SyntasticError SpellBad
         "highlight link SyntasticWarning SpellCap
+		" Toggle pylint
+		let g:pymode_lint_wrie = 0 "do not check on write
+		let g:syntastic_check_on_open = 0
+		let g:syntastic_check_on_wq = 0
+		map <Leader>pt       :SyntasticToggleMode <CR>
+		map <Leader>pc       :SyntasticCheck <CR>
+		let g:syntastic_mode_map = {
+		    \ "mode": "passive",
+			\ "active_filetypes": ["py", "ruby", "php"],
+			\ "passive_filetypes": ["puppet"] }
     endif
 " }
 
@@ -366,6 +387,12 @@ let g:My_Conky_Syntax_Enabled   = 1
     endif
 " }
 
+" PyModeAle { " For Async Lint Engine
+    if gPMy_PyMode_Ale_Enabled
+	    Bundle 'dense-analysis/ale'
+	endif
+  
+" }
 " PyMode_Indent {
     if g:My_PyMode_Indent_Enabled
         Bundle 'hynek/vim-python-pep8-indent'
