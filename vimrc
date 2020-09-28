@@ -145,14 +145,15 @@ filetype off " Turn filetype on later. vundle needs it off
 "Vim-airline Settings {
     if g:My_Airline_Enabled
         Bundle 'bling/vim-airline'
+        Bundle 'vim-airline/vim-airline-themes'
         "let g:airline_section_b = '%{strftime("%c")}'
         let g:airline_section_y = 'B# %{bufnr("%")}'
         let g:airline#extensions#tabline#enabled = 0
         let g:airline#extensions#tabline#left_sep = ' '
         let g:airline#extensions#tabline#left_alt_sep = '|'
         let g:airline_powerline_fonts = 1
-		let g:airline_theme = 'bubblegum'
-		let g:airline_solarized_bg='dark'
+        let g:airline_theme = 'bubblegum'
+        let g:airline_solarized_bg='dark'
     endif
 " }
 
@@ -388,11 +389,11 @@ let g:My_Conky_Syntax_Enabled   = 1
 " }
 
 " PyModeAle { " For Async Lint Engine
-    if gPMy_PyMode_Ale_Enabled
+    if g:My_PyMode_Ale_Enabled
 	    Bundle 'dense-analysis/ale'
 	endif
-  
 " }
+  
 " PyMode_Indent {
     if g:My_PyMode_Indent_Enabled
         Bundle 'hynek/vim-python-pep8-indent'
