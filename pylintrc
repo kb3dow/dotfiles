@@ -17,7 +17,8 @@ ignore-patterns=
 # pygtk.require().
 #init-hook=
 #init-hook='import sys; sys.path.append("/home/ubuntu/miniconda3/envs/TUPT/lib/python3.6/site-packages/"); sys.path.append("/home/ubuntu/tupt-root/"); '
-init-hook='import sys; sys.path.append("/home/rrajamani/.miniconda3/envs/PUGW/lib/python3.7/site-packages/"); sys.path.append("/home/rrajamani/altitude/OpsAndMaintenance/UserProvisioningTool/PUGWORKS"); '
+#init-hook='import sys; sys.path.append("/home/rrajamani/.miniconda3/envs/PUGW/lib/python3.7/site-packages/"); sys.path.append("/home/rrajamani/altitude/OpsAndMaintenance/UserProvisioningTool/PUGWORKS"); '
+init-hook='import sys; sys.path.append("/home/rr/.env/p3/lib/python3.6/site-packages/"); sys.path.append("/home/rr/radiopi"); 
 
 # Use multiple processes to speed up Pylint. Specifying 0 will auto-detect the
 # number of processors available to use.
